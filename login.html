@@ -207,6 +207,9 @@
         <div class="error-msg" id="errMsg"></div>
         <div class="ok-msg" id="okMsg"></div>
         <div class="hint" id="connHint" style="margin-bottom:12px"></div>
+        <button type="button" id="guestBtn" class="btn btn-ghost btn-block" style="display:none;margin-bottom:14px;font-weight:700">
+          🎯 游客免登录 · 直接体验演示
+        </button>
 
         <form id="authForm" novalidate>
           <div class="field" id="nameField" style="display:none">
@@ -274,9 +277,18 @@
       }
       connHint.textContent = '正在连接后端服务…';
       const b = await window.CWApiBase.resolve();
+      const isLocalDev = ['localhost', '127.0.0.1', ''].indexOf(location.hostname) !== -1;
       if (b === false) {
-        connHint.innerHTML = '⚠️ 未连接到后端服务（提交登录会返回 405）。<br>请先运行 <b>启动.bat</b>（或 <b>npm start</b>）再重新打开本页。';
-        connHint.style.color = '#e5484d';
+        if (isLocalDev) {
+          connHint.innerHTML = '⚠️ 未连接到后端服务（提交登录会返回 405）。<br>请先运行 <b>启动.bat</b>（或 <b>npm start</b>）再重新打开本页。';
+          connHint.style.color = '#e5484d';
+        } else {
+          // 纯静态托管版（如 GitHub Pages）：免后端，引导游客体验 / 本地注册
+          connHint.innerHTML = 'ℹ️ 当前为<b>纯静态演示版</b>：无需后端即可使用。可点下方<b>游客免登录体验</b>，或注册一个仅存本机浏览器的本地账号。';
+          connHint.style.color = '#0f9d76';
+          const gb = document.getElementById('guestBtn');
+          if (gb) gb.style.display = 'block';
+        }
       } else {
         const target = b || location.origin;
         const fromFile = location.protocol === 'file:';
@@ -310,6 +322,15 @@
     }
     tabLogin.addEventListener('click', () => setMode('login'));
     tabRegister.addEventListener('click', () => setMode('register'));
+
+    // 游客免登录进入演示（纯静态版）：清掉可能存在的本地会话，确保进入游客只读演示
+    const guestBtn = document.getElementById('guestBtn');
+    if (guestBtn) {
+      guestBtn.addEventListener('click', () => {
+        try { localStorage.removeItem('cw_session'); } catch (e) {}
+        location.href = 'dashboard.html';
+      });
+    }
 
     const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const submitBtnEl = document.getElementById('submitBtn');
