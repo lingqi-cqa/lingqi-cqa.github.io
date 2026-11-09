@@ -1,0 +1,168 @@
+/* ============================================================
+   SmartPig · SMART BOOKKEEPING —— 全站统一品牌标识
+   用法：
+     <img class="brand-logo" src="assets/smartpig-mark.png" alt="SmartPig" />
+     <span class="brand-name">SmartPig</span>
+     <span class="brand-tag">SMART BOOKKEEPING</span>
+   ============================================================ */
+
+/* 徽标图形：圆形、等比缩放、永不被压缩 */
+.brand-logo {
+  display: block;
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: contain;
+  background: transparent;
+  box-shadow: 0 2px 8px rgba(63, 106, 92, .12);
+}
+
+/* 字标：SmartPig */
+.brand-name {
+  font-weight: 800;
+  letter-spacing: -.4px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* 副标：SMART BOOKKEEPING */
+.brand-tag {
+  display: block;
+  margin-top: 3px;
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  opacity: .5;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.brand-stack { display: inline-flex; flex-direction: column; justify-content: center; }
+.brand-stack .brand-name { line-height: 1.1; }
+
+/* —— 顶部导航（dashboard）里的品牌 —— */
+.topnav .brand { gap: 9px; }
+.topnav .brand .brand-logo { width: 34px; height: 34px; }
+.topnav .brand .brand-name { font-size: 18px; }
+
+/* —— 登录页左栏品牌 —— */
+.auth-aside .brand { gap: 10px; }
+.auth-aside .brand .brand-logo { width: 38px; height: 38px; }
+.auth-aside .brand .brand-name { font-size: 20px; }
+
+/* —— 官网顶栏 / 页脚品牌 —— */
+.nav-logo .brand-logo {
+  width: 30px;
+  height: 30px;
+}
+.nav-logo .brand-name { font-size: 20px; font-weight: 800; letter-spacing: -.5px; }
+.footer-brand .brand-logo { width: 32px; height: 32px; }
+
+/* —— AI 助手悬浮球：用徽标做图标 —— */
+.ai-fab {
+  padding: 0 !important;
+  overflow: hidden;
+  background: #fff !important;
+  display: grid !important;
+  place-items: center;
+}
+.ai-fab img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  transform: scale(.92);
+  transition: transform .18s ease;
+}
+.ai-fab:hover img { transform: scale(1); }
+
+/* —— AI 面板标题栏 —— */
+.ai-panel-head .ai-head-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.ai-panel-head .ai-head-brand img {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #fff;
+  flex: none;
+}
+.ai-panel-head .ai-head-brand b { font-weight: 700; }
+
+/* —— 导航栏里的「消费教练」图标 —— */
+.ico-pig {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  object-fit: contain;
+  vertical-align: -3px;
+}
+.nav-item .ico .ico-pig {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  vertical-align: -4px;
+}
+.topnav .nav-item .ico .ico-pig { width: 17px; height: 17px; vertical-align: -3px; }
+
+/* —— 状态徽章里的小标 —— */
+.badge .badge-pig {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  vertical-align: -3px;
+  margin-right: 4px;
+}
+
+/* —— AI 对话气泡里的助手头像 —— */
+.ai-panel-log .msg.ai .avatar img,
+.bubble-pig {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: block;
+}
+.ai-panel-log .msg.ai .avatar {
+  background: #fff !important;
+  overflow: hidden;
+}
+
+/* —— 对话气泡头像 / 卡片内联小标 —— */
+.brand-avatar,
+.brand-inline {
+  display: inline-block;
+  object-fit: contain;
+  border-radius: 50%;
+  background: #fff;
+  vertical-align: -3px;
+}
+.brand-avatar { width: 20px; height: 20px; display: block; }
+.brand-inline { width: 17px; height: 17px; margin-right: 5px; }
+
+/* —— 品牌字标比旧名更长：中窄屏收紧顶部导航，避免栏目被截断 —— */
+@media (max-width: 1560px) {
+  .topnav .brand-tag { display: none; }
+  .topnav .tn-section-title,
+  .topnav .tn-sep { display: none; }
+  .topnav .nav-item { padding: 8px 11px; font-size: 14px; }
+  /* 空间不够时允许横向滚动，避免栏目名被从中间截断 */
+  .tn-nav { overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; }
+  .tn-nav::-webkit-scrollbar { display: none; }
+}
+@media (max-width: 1400px) {
+  .topnav .nav-item { padding: 7px 9px; font-size: 13.5px; }
+}
+@media (max-width: 1320px) {
+  .topnav .tn-right .btn-ghost { display: none; }
+}
+
+/* —— 小尺寸（移动端）—— */
+@media (max-width: 560px) {
+  .topnav .brand .brand-logo { width: 30px; height: 30px; }
+  .nav-logo .brand-logo { width: 26px; height: 26px; }
+  .nav-logo .brand-name { font-size: 17px; }
+}

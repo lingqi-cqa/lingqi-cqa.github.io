@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartPig · 智能记账工作台</title>
+  <meta name="description" content="SmartPig 智能记账工作台：一笔入魂、钱去哪了、小目标、消费教练与财务免疫力。" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/dashboard-theme.css" />
+  <link rel="stylesheet" href="css/welcome-modal.css" />
+  <link rel="stylesheet" href="css/brand.css" />
+  <link rel="stylesheet" href="css/feed-pig.css" />
+  <link rel="stylesheet" href="css/risk-guard.css" />
+  <link rel="stylesheet" href="css/budget-plan.css" />
+  <link rel="stylesheet" href="css/spend-report.css" />
+  <link rel="stylesheet" href="css/piggy-motion.css" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png" />
+  <link rel="apple-touch-icon" href="assets/smartpig-mark-180.png" />
+  <style>
+  /* 全局 AI 悬浮球（💬） */
+  .ai-fab {
+    position: fixed; right: 22px; bottom: 22px; z-index: 60;
+    width: 56px; height: 56px; border-radius: 50%; border: none; cursor: pointer;
+    background: var(--primary, #16a34a); color: #fff; font-size: 24px; line-height: 1;
+    box-shadow: 0 8px 22px rgba(0,0,0,.28); display: grid; place-items: center;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .ai-fab:hover { transform: scale(1.06); box-shadow: 0 10px 26px rgba(0,0,0,.32); }
+  .ai-panel {
+    position: fixed; right: 22px; bottom: 90px; z-index: 60;
+    width: 360px; max-width: calc(100vw - 44px); height: 460px; max-height: calc(100vh - 120px);
+    background: var(--surface, #fff); border-radius: 16px; overflow: hidden;
+    box-shadow: 0 14px 44px rgba(0,0,0,.28); border: 1px solid var(--border, #e5e9f2);
+    display: flex; flex-direction: column;
+    transform: translateY(14px) scale(.98); opacity: 0; pointer-events: none; transition: .18s ease;
+  }
+  .ai-panel.open { transform: none; opacity: 1; pointer-events: auto; }
+  .ai-panel-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; background: var(--primary, #16a34a); color: #fff; font-weight: 600; }
+  .ai-panel-close { background: rgba(255,255,255,.18); border: none; width: 30px; height: 30px; border-radius: 8px; color: #fff; cursor: pointer; font-size: 16px; }
+  .ai-panel-log { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; background: var(--bg, #f5f7fb); }
+  .ai-panel-log .msg { display: flex; gap: 8px; align-items: flex-start; }
+  .ai-panel-log .msg .avatar { width: 30px; height: 30px; border-radius: 50%; background: #e5e9f2; display: grid; place-items: center; font-size: 16px; flex: 0 0 auto; }
+  .ai-panel-log .msg.ai .avatar { background: #dcfce7; }
+  .ai-panel-log .msg .bubble { padding: 9px 12px; border-radius: 12px; font-size: 13.5px; line-height: 1.55; max-width: 84%; word-break: break-word; }
+  .ai-panel-log .msg.user .bubble { background: var(--primary, #16a34a); color: #fff; border-top-right-radius: 4px; }
+  .ai-panel-log .msg.ai .bubble { background: #fff; border: 1px solid var(--border, #e5e9f2); border-top-left-radius: 4px; }
+  .ai-panel-input { display: flex; gap: 8px; padding: 10px; border-top: 1px solid var(--border, #e5e9f2); background: var(--surface, #fff); }
+  .ai-panel-input input { flex: 1 1 auto; min-width: 0; border: 1px solid var(--border, #e5e9f2); border-radius: 10px; padding: 9px 12px; font-size: 13.5px; outline: none; }
+  .ai-panel-input input:focus { border-color: var(--primary, #16a34a); }
+  .ai-panel-send { flex: 0 0 auto; white-space: nowrap; border: none; background: var(--primary, #16a34a); color: #fff; border-radius: 10px; padding: 0 14px; cursor: pointer; font-size: 13.5px; }
+  /* 语音：播报开关 + 麦克风 */
+  .ai-panel-tools { display: flex; align-items: center; gap: 6px; }
+  .ai-panel-speak { background: rgba(255,255,255,.18); border: none; width: 30px; height: 30px; border-radius: 8px; color: #fff; cursor: pointer; font-size: 15px; transition: background .15s; }
+  .ai-panel-speak.on { background: rgba(255,255,255,.38); }
+  .ai-panel-mic { border: none; background: var(--border, #e5e9f2); color: #475569; border-radius: 10px; padding: 0 11px; cursor: pointer; font-size: 17px; height: 38px; flex: 0 0 auto; line-height: 1; transition: background .15s; }
+  .ai-panel-mic:hover { background: #d8dee9; }
+  .ai-panel-mic.listening { background: #ef4444; color: #fff; animation: aiMicPulse 1.1s infinite; }
+  @keyframes aiMicPulse { 0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,.45); } 50% { box-shadow: 0 0 0 9px rgba(239,68,68,0); } }
+  .ai-panel-set { background: rgba(255,255,255,.18); border: none; width: 30px; height: 30px; border-radius: 8px; color: #fff; cursor: pointer; font-size: 15px; transition: background .15s; }
+  .ai-panel-set:hover { background: rgba(255,255,255,.38); }
+  /* AI 语音对话设置弹窗 */
+  .ai-set-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--border, #eef1f6); }
+  .ai-set-row:last-of-type { border-bottom: none; }
+  .ai-set-row .lab { display: flex; flex-direction: column; gap: 3px; }
+  .ai-set-row .lab small { color: var(--text-2, #64748b); font-size: 12.5px; }
+  .ai-set-row.col { flex-direction: column; align-items: stretch; gap: 8px; }
+  .ai-set-row select { padding: 8px 10px; border: 1px solid var(--border, #e5e9f2); border-radius: 9px; font-size: 14px; max-width: 100%; }
+  .ai-set-tag { font-size: 12px; padding: 3px 9px; border-radius: 999px; background: var(--surface-2, #eef1f6); color: var(--text-2, #64748b); }
+  .ai-set-tag.ok { background: #dcfce7; color: #15803d; }
+  .ai-set-tag.no { background: #fee2e2; color: #b91c1c; }
+  .ai-set-hint { margin-top: 14px; font-size: 12.5px; color: var(--text-2, #64748b); line-height: 1.6; }
+
+  /* —— AI 语音设置：音色调节 / 自定义 —— */
+  .ai-voice-sub { display: flex; flex-direction: column; gap: 9px; margin-top: 2px; }
+  .ai-range { display: grid; grid-template-columns: 52px 1fr 42px; align-items: center; gap: 10px; font-size: 13px; color: var(--text-2, #475569); }
+  .ai-range output { font-variant-numeric: tabular-nums; color: var(--brand, #2f6df6); font-weight: 600; text-align: right; }
+  .ai-range input[type=range] { width: 100%; accent-color: var(--brand, #2f6df6); }
+  .ai-custom { margin-top: 4px; }
+  .ai-custom-bar { display: flex; gap: 8px; }
+  .ai-custom-bar input[type=text] { flex: 1; padding: 8px 10px; border: 1px solid var(--border, #e5e9f2); border-radius: 9px; font-size: 13.5px; }
+  .ai-mini-btn { padding: 8px 14px; border: none; border-radius: 9px; background: var(--brand, #2f6df6); color: #fff; font-size: 13.5px; cursor: pointer; white-space: nowrap; }
+  .ai-mini-btn:hover { filter: brightness(1.05); }
+  .ai-mini-btn:disabled { opacity: .5; cursor: default; }
+  .ai-preset-list { display: flex; flex-direction: column; gap: 7px; margin-top: 2px; }
+  .ai-preset-item { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border: 1px solid var(--border, #e5e9f2); border-radius: 10px; font-size: 13px; }
+  .ai-preset-item .nm { flex: 1; font-weight: 600; color: var(--text, #1f2937); }
+  .ai-preset-item .meta { color: var(--text-2, #64748b); font-size: 12px; }
+  .ai-preset-item .tst { border: none; background: #eef2ff; color: #2f6df6; border-radius: 7px; padding: 4px 9px; cursor: pointer; font-size: 12px; }
+  .ai-preset-item .del { border: none; background: #fef2f2; color: #dc2626; border-radius: 7px; padding: 4px 9px; cursor: pointer; font-size: 12px; }
+  .ai-preset-empty { color: var(--text-2, #94a3b8); font-size: 12.5px; font-style: italic; }
+  .ai-voice-opt-reco { color: #16a34a; font-weight: 600; }
+
+  @media (max-width: 980px) { .ai-panel { right: 12px; bottom: 84px; } .ai-fab { right: 12px; bottom: 16px; } }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- 顶部导航（横向菜单 + 当前栏目名 + 用户区） -->
+    <header class="topnav" id="topnav">
+      <div class="tn-left">
+        <button class="app-menu-btn" id="appMenuBtn" aria-label="菜单">☰</button>
+        <a class="brand" href="index.html" style="text-decoration:none">
+          <img class="brand-logo" src="assets/smartpig-mark.png" alt="" aria-hidden="true" />
+          <span class="brand-stack">
+            <span class="brand-name">SmartPig</span>
+            <span class="brand-tag">SMART BOOKKEEPING</span>
+          </span>
+        </a>
+        <span class="tn-sep"></span>
+        <span class="tn-section-title" id="pageTitle">我的钱袋子</span>
+      </div>
+      <nav class="tn-nav" id="tnNav">
+        <button class="nav-item active" data-page="home"><span class="ico">🏠</span> 我的钱袋子</button>
+        <button class="nav-item" data-page="quick"><span class="ico">⚡</span> 一笔入魂</button>
+        <button class="nav-item" data-page="manage"><span class="ico">📊</span> 钱去哪了</button>
+        <button class="nav-item" data-page="goals"><span class="ico">🎯</span> 小目标</button>
+        <button class="nav-item" data-page="ai"><span class="ico"><img class="ico-pig" src="assets/smartpig-mark-128.png" alt="" aria-hidden="true" /></span> 消费教练</button>
+        <button class="nav-item" data-page="health"><span class="ico">🩺</span> 财务免疫力</button>
+        <button class="nav-item" data-page="alerts"><span class="ico">🧊</span> 冷静区<span class="nav-badge" id="alertBadge" style="display:none"></span></button>
+      </nav>
+      <div class="tn-right">
+        <span class="badge badge-accent"><img class="badge-pig" src="assets/smartpig-mark-128.png" alt="" aria-hidden="true" />SmartPig 已就绪</span>
+        <a class="btn btn-ghost btn-sm" href="index.html">官网</a>
+        <div class="user-box">
+          <div class="avatar" id="avatar">U</div>
+          <div class="tn-user-meta">
+            <div class="nm" id="userName">用户</div>
+            <div class="em" id="userEmail">—</div>
+          </div>
+          <button class="nav-item logout-btn" id="logoutBtn"><span class="ico">⏻</span> 退出</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 主区 -->
+    <main class="main">
+      <div class="page" id="page">
+        <!-- 由 app.js 渲染 -->
+      </div>
+    </main>
+  </div>
+
+  <!-- 移动端快捷记账按钮 -->
+  <button class="fab" id="fab" aria-label="快速记账">＋</button>
+
+  <!-- 记账模态框 -->
+  <div class="modal-mask" id="txModal">
+    <div class="modal">
+      <div class="m-head">
+        <h3>记一笔</h3>
+        <button class="close" id="txClose">×</button>
+      </div>
+      <form id="txForm">
+        <div class="field">
+          <label>类型</label>
+          <div class="seg" id="txSeg">
+            <button type="button" class="active exp" data-type="expense">支出</button>
+            <button type="button" data-type="income">收入</button>
+          </div>
+        </div>
+        <div class="field">
+          <label for="txAmount">金额（¥）</label>
+          <input type="number" id="txAmount" step="0.01" min="0" placeholder="0.00" required />
+        </div>
+        <div class="field">
+          <label for="txCategory">分类</label>
+          <select id="txCategory"></select>
+        </div>
+        <div class="food-box" id="txFoodBox" style="display:none">
+          <div class="fb-head">
+            <span class="lbl">🍽️ 食物明细（AI 估算热量）</span>
+            <span class="calorie-tag" id="txCalTag">0 千卡</span>
+          </div>
+          <input type="text" id="txFoodText" placeholder="例如：米饭1碗, 红烧肉1份, 可乐1瓶" />
+          <div class="food-tags" id="txFoodTags"></div>
+        </div>
+        <div class="field">
+          <label for="txDate">日期</label>
+          <input type="date" id="txDate" required />
+        </div>
+        <div class="field">
+          <label for="txNote">备注（可选）</label>
+          <input type="text" id="txNote" placeholder="输入商家/场景，AI 自动预判分类" maxlength="40" />
+          <div class="cat-hint" id="txCatHint"></div>
+        </div>
+        <div class="field">
+          <label for="txTags">自定义标签（可选，逗号分隔）</label>
+          <input type="text" id="txTags" placeholder="例如：朋友聚餐, 周末, 必要" maxlength="60" />
+          <div class="tag-suggest" id="txTagSuggest">
+            <span>常用：</span>
+            <button type="button" class="ts-chip" data-tag="必要">必要</button>
+            <button type="button" class="ts-chip" data-tag="冲动消费">冲动消费</button>
+            <button type="button" class="ts-chip" data-tag="朋友聚餐">朋友聚餐</button>
+            <button type="button" class="ts-chip" data-tag="周末">周末</button>
+            <button type="button" class="ts-chip" data-tag="可报销">可报销</button>
+          </div>
+        </div>
+        <div class="tx-alert" id="txAlert" style="display:none"></div>
+        <div class="error-msg" id="txErr"></div>
+        <button type="submit" class="btn btn-primary btn-block">保存</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 目标模态框 -->
+  <div class="modal-mask" id="goalModal">
+    <div class="modal">
+      <div class="m-head">
+        <h3 id="goalModalTitle">新建储蓄目标</h3>
+        <button class="close" id="goalClose">×</button>
+      </div>
+      <form id="goalForm">
+        <div class="field">
+          <label for="goalName">目标名称</label>
+          <input type="text" id="goalName" placeholder="例如：旅行基金" maxlength="20" required />
+        </div>
+        <div class="field">
+          <label for="goalTarget">目标金额（¥）</label>
+          <input type="number" id="goalTarget" step="0.01" min="0" placeholder="10000" required />
+        </div>
+        <div class="field">
+          <label for="goalSaved">已攒金额（¥）</label>
+          <input type="number" id="goalSaved" step="0.01" min="0" placeholder="0" value="0" />
+        </div>
+        <div class="field">
+          <label for="goalEmoji">图标</label>
+          <input type="text" id="goalEmoji" value="🎯" maxlength="2" />
+        </div>
+        <div class="error-msg" id="goalErr"></div>
+        <button type="submit" class="btn btn-primary btn-block">保存目标</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 分类预算模态框 -->
+  <div class="modal-mask" id="budgetModal">
+    <div class="modal">
+      <div class="m-head">
+        <h3>设置分类月度预算</h3>
+        <button class="close" id="budgetClose">×</button>
+      </div>
+      <p class="muted" style="font-size:13px;margin:0 0 14px">为各支出类别设定每月固定预算，超出时记账会自动预警。</p>
+      <div id="budgetFields"></div>
+      <div class="error-msg" id="budgetErr"></div>
+      <button class="btn btn-primary btn-block" id="budgetSave">保存预算</button>
+    </div>
+  </div>
+
+  <!-- 导出弹窗 -->
+  <div class="modal-mask" id="exportModal">
+    <div class="modal modal-lg">
+      <div class="m-head">
+        <h3>📤 账单导出</h3>
+        <button class="close" id="exportClose">×</button>
+      </div>
+      <div class="inline" style="margin-bottom:14px">
+        <div class="field" style="margin:0"><label>时间范围</label>
+          <select id="expRange">
+            <option value="month">本月</option>
+            <option value="year">本年（1月至今）</option>
+            <option value="all">全部</option>
+            <option value="custom">自定义</option>
+          </select></div>
+        <div class="field" id="expCustomWrap" style="margin:0;display:none"><label>自定义起止</label>
+          <div style="display:flex;gap:6px"><input type="date" id="expFrom" /><span style="align-self:center">~</span><input type="date" id="expTo" /></div></div>
+      </div>
+      <div class="exp-summary" id="expSummary"></div>
+      <div class="exp-preview-wrap">
+        <div class="exp-preview-title">导出前预览（共 <span id="expCount">0</span> 笔）</div>
+        <div class="table-scroll"><table class="table" id="expPreview"><thead></thead><tbody></tbody></table></div>
+      </div>
+      <div class="error-msg" id="expErr"></div>
+      <div style="display:flex;gap:10px;margin-top:6px">
+        <button class="btn btn-primary" id="expDownload" style="flex:1">⬇️ 导出 CSV（可用 Excel 打开）</button>
+        <button class="btn btn-ghost" id="expCopy" style="flex:0 0 auto">复制预览</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 语音记账弹窗 -->
+  <div class="modal-mask" id="voiceModal">
+    <div class="modal">
+      <div class="m-head">
+        <h3>🎙️ AI 语音极速记账</h3>
+        <button class="close" id="voiceClose">×</button>
+      </div>
+      <p class="muted" style="font-size:13px;margin:0 0 14px">点击麦克风，说出「今天午餐花了 18 块餐饮」或「昨天打车 30 元」，AI 自动识别金额、分类与备注。</p>
+      <div class="voice-stage" id="voiceStage">
+        <button class="mic-btn" id="micBtn" aria-label="开始说话">
+          <span class="mic-ico">🎤</span>
+        </button>
+        <div class="voice-status" id="voiceStatus">点击麦克风开始（需 Chrome/Edge 且联网）</div>
+      </div>
+      <div class="voice-manual">
+        <input type="text" id="voiceManual" placeholder="或手动输入：今天午餐花了18块餐饮" />
+        <button class="btn btn-ghost btn-sm" id="voiceManualBtn">识别文字</button>
+      </div>
+      <div class="voice-transcript" id="voiceTranscript" style="display:none"></div>
+      <div class="voice-parsed" id="voiceParsed" style="display:none"></div>
+      <div class="error-msg" id="voiceErr"></div>
+      <button class="btn btn-primary btn-block" id="voiceConfirm" style="display:none">✅ 一键入账</button>
+    </div>
+  </div>
+
+  <!-- 小票 / 截图 识别弹窗 -->
+  <div class="modal-mask" id="receiptModal">
+    <div class="modal modal-lg">
+      <div class="m-head">
+        <h3>🧾 小票 / 截图 AI 识别记账</h3>
+        <button class="close" id="receiptClose">×</button>
+      </div>
+      <p class="muted" style="font-size:13px;margin:0 0 14px">上传消费小票或支付截图，自动识别金额、商家、时间与分类。默认<b>发送到本地后端识别</b>（图片仅在你的电脑上处理，不会离开本机）；若后端配置了云端 OCR 密钥则自动改用云端，更准。</p>
+      <div class="receipt-upload" id="receiptDrop">
+        <input type="file" id="receiptFile" accept="image/*" hidden />
+        <button class="btn btn-ghost" id="receiptPick">📁 选择图片</button>
+        <span class="muted" style="font-size:12.5px">支持 PNG / JPG</span>
+      </div>
+      <div class="receipt-preview" id="receiptPreview" style="display:none">
+        <img id="receiptImg" alt="小票预览" />
+      </div>
+      <div class="receipt-fields" id="receiptFields" style="display:none">
+        <div class="grid-2">
+          <div class="field"><label>金额（¥）</label><input type="number" id="rcAmount" step="0.01" min="0" /></div>
+          <div class="field"><label>商家 / 备注</label><input type="text" id="rcNote" maxlength="40" /></div>
+          <div class="field"><label>消费日期</label><input type="date" id="rcDate" /></div>
+          <div class="field"><label>分类</label><select id="rcCategory"></select></div>
+        </div>
+        <div class="receipt-recog" id="receiptRecog"></div>
+        <button class="btn btn-primary btn-block" id="rcConfirm">✅ 确认入账</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast 容器 -->
+  <div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
+
+  <!-- 轻游戏化：今日喂小猪（纯前端 localStorage 记录连续天数） -->
+  <div class="feed-pig" id="feedPig">
+    <div class="fp-bubble" id="fpBubble" role="status" aria-live="polite"></div>
+    <button class="fp-btn" id="fpBtn" type="button" aria-label="今日喂小猪">
+      <span class="fp-pig" id="fpPig">
+        <img id="fpPigImg" src="assets/smartpig-mark-256.png" alt="" aria-hidden="true" />
+      </span>
+      <span class="fp-text">
+        <b>今日喂小猪</b>
+        <i id="fpStreak">今天还没喂哦</i>
+      </span>
+      <span class="fp-count" id="fpCount" hidden>0</span>
+      <span class="fp-dot" id="fpDot" aria-hidden="true"></span>
+    </button>
+  </div>
+
+  <!-- 全局 AI 悬浮球（💬） -->
+  <button id="aiFab" class="ai-fab" aria-label="SmartPig 智能助手">
+    <img src="assets/smartpig-mark-256.png" alt="" aria-hidden="true" />
+  </button>
+  <div id="aiPanel" class="ai-panel" aria-hidden="true">
+    <div class="ai-panel-head">
+      <span class="ai-head-brand">
+        <img src="assets/smartpig-mark-128.png" alt="" aria-hidden="true" />
+        <b>SmartPig 助手</b>
+      </span>
+      <div class="ai-panel-tools">
+        <button class="ai-panel-speak" aria-label="语音播报" title="语音播报开关（开启后自动朗读回答）">🔊</button>
+        <button class="ai-panel-set" aria-label="AI设置" title="AI 语音对话设置">⚙️</button>
+        <button class="ai-panel-close" aria-label="关闭">×</button>
+      </div>
+    </div>
+    <div class="ai-panel-log"></div>
+    <div class="ai-panel-input">
+      <button class="ai-panel-mic" aria-label="语音输入" title="按住说话（语音转文字，说完自动发送）">🎤</button>
+      <input type="text" placeholder="问我任何记账 / 理财问题…" />
+      <button class="ai-panel-send">发送</button>
+    </div>
+  </div>
+
+  <!-- AI 语音对话设置 -->
+  <div id="aiSettingsModal" class="modal-mask" aria-hidden="true">
+    <div class="modal" style="max-width:440px">
+      <div class="m-head"><h3>🤖 AI 语音对话设置</h3><button class="close" id="aiSettingsClose" aria-label="关闭">×</button></div>
+      <p class="muted" style="font-size:13px;margin:0 0 4px">让 AI 助手开口说话、用语音提问。设置自动保存，刷新后依然生效。</p>
+      <div class="ai-set-row">
+        <span class="lab">🔊 自动语音播报<small>开启后 AI 回答自动朗读，无需每次点 🔊</small></span>
+        <input type="checkbox" id="aiAutoSpeak" />
+      </div>
+      <div class="ai-set-row">
+        <span class="lab">🎤 语音输入<small>说完自动转文字并发送</small></span>
+        <span class="ai-set-tag" id="aiMicTag">检测中…</span>
+      </div>
+      <div class="ai-set-row col">
+        <span class="lab">🗣️ 选择音色<small>挑一个你喜欢的声音，标有 ★推荐 的更自然好听</small></span>
+        <select id="aiVoiceSel"><option value="">系统默认（中文）</option></select>
+        <div class="ai-voice-sub">
+          <label class="ai-range">语速<output id="aiRateOut">1.02</output>
+            <input type="range" id="aiRate" min="0.5" max="2" step="0.05" value="1.02" />
+          </label>
+          <label class="ai-range">音调<output id="aiPitchOut">1.00</output>
+            <input type="range" id="aiPitch" min="0" max="2" step="0.05" value="1" />
+          </label>
+        </div>
+      </div>
+      <div class="ai-set-row col ai-custom">
+        <span class="lab">✨ 自定义音色<small>把当前「音色+语速+音调」存成专属声音，随时切换</small></span>
+        <div class="ai-custom-bar">
+          <input type="text" id="aiPresetName" placeholder="给这个声音起个名字，如「知性女声」" maxlength="12" />
+          <button type="button" id="aiSavePreset" class="ai-mini-btn">保存</button>
+        </div>
+        <div id="aiPresetList" class="ai-preset-list"></div>
+      </div>
+      <p class="ai-set-hint">语音功能依赖浏览器原生 Web Speech API：请使用 <b>Chrome / Edge</b>，首次需联网加载语音引擎；麦克风需在 https 或 localhost 环境下授权。</p>
+    </div>
+  </div>
+
+  <!-- 登录激励弹窗：欢迎存钱（仅登录后首次弹出） -->
+  <div class="welcome-mask" id="welcomeMask" aria-hidden="true">
+    <div class="welcome-card">
+      <button class="welcome-close" id="welcomeClose" aria-label="关闭">×</button>
+      <div class="welcome-deco" aria-hidden="true"><span>💰</span><span>🪙</span><span>👛</span><span>🧧</span><span>✨</span></div>
+      <svg class="welcome-pig" viewBox="0 0 200 200" role="img" aria-label="储蓄罐小猪">
+        <defs>
+          <radialGradient id="wpBody" cx="40%" cy="26%" r="80%">
+            <stop offset="0%" stop-color="#ffe3ed" />
+            <stop offset="55%" stop-color="#ffb3cb" />
+            <stop offset="100%" stop-color="#f389ab" />
+          </radialGradient>
+        </defs>
+        <ellipse cx="100" cy="188" rx="66" ry="10" fill="#f3c3d4" opacity="0.5" />
+        <path d="M48 54 q-14 -24 4 -28 q18 -3 16 22 Z" fill="#f389ab" />
+        <path d="M152 54 q14 -24 -4 -28 q-18 -3 -16 22 Z" fill="#f389ab" />
+        <circle cx="100" cy="92" r="80" fill="url(#wpBody)" />
+        <ellipse cx="68" cy="56" rx="32" ry="20" fill="#ffffff" opacity="0.45" />
+        <path d="M48 66 q52 -20 104 0 l0 15 q-52 -18 -104 0 Z" fill="#ff6b81" />
+        <circle cx="100" cy="69" r="12" fill="#ffd34e" />
+        <path d="M100 63 l2.3 5 5 .6 -3.8 3.5 1 5.2 -4.5 -2.5 -4.5 2.5 1 -5.2 -3.8 -3.5 5 -.6 Z" fill="#b5305a" />
+        <rect x="84" y="24" width="32" height="11" rx="5.5" fill="#d95f82" />
+        <circle cx="56" cy="104" r="13" fill="#ff9bb3" opacity="0.8" />
+        <circle cx="144" cy="104" r="13" fill="#ff9bb3" opacity="0.8" />
+        <path d="M62 92 q14 -18 28 0" stroke="#4a2632" stroke-width="5" fill="none" stroke-linecap="round" />
+        <path d="M110 92 q14 -18 28 0" stroke="#4a2632" stroke-width="5" fill="none" stroke-linecap="round" />
+        <ellipse cx="100" cy="120" rx="30" ry="22" fill="#ff9bb3" />
+        <circle cx="88" cy="120" r="5" fill="#c2406e" />
+        <circle cx="112" cy="120" r="5" fill="#c2406e" />
+        <path d="M86 142 q14 13 28 0" stroke="#c2406e" stroke-width="4" fill="none" stroke-linecap="round" />
+      </svg>
+      <h2 class="welcome-title" id="welcomeTitle"></h2>
+      <p class="welcome-quote" id="welcomeQuote"></p>
+      <div class="welcome-progress">
+        <div class="bar"><div class="fill" id="welcomeFill"></div></div>
+        <div class="lab" id="welcomeLuck"></div>
+      </div>
+      <div class="welcome-actions">
+        <button class="welcome-save" id="welcomeSave">💰 去存第一笔</button>
+        <button class="welcome-later" id="welcomeLater">先逛逛 👀</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ECharts（数据可视化，离线时自动降级） -->
+  <script src="vendor/echarts/echarts.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/api-base.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/sync.js"></script>
+  <script src="js/ocr-local.js?v=local20261031"></script>
+  <script src="js/app.js"></script>
+  <script src="js/welcome-modal.js"></script>
+  <script src="js/feed-pig.js"></script>
+  <script src="js/piggy-motion.js"></script>
+</body>
+</html>

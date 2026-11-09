@@ -1,0 +1,282 @@
+/* ===========================================================
+   AI 预算规划卡片（对话里直接给金额 + 一键执行）
+   与 SmartPig 暖白主题一致：奶油底、薄荷主色、焦糖点睛
+   =========================================================== */
+
+.bp-lead {
+  margin: 0 0 7px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #3D4C44;
+}
+
+.bp-lead b {
+  color: #147A56;
+}
+
+.bp-lead-sub {
+  margin-top: 6px;
+  font-size: 11.5px;
+  color: #8A7A66;
+}
+
+.bp-card {
+  --bp-ink: #2C3A33;
+  --bp-mute: #8A7A66;
+  --bp-line: #F0E3D2;
+  --bp-mint: #23B883;
+  --bp-coral: #E07A54;
+  margin-top: 2px;
+  padding: 10px 11px 11px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #FFFDF9 0%, #FFF8F0 100%);
+  border: 1px solid var(--bp-line);
+  box-shadow: 0 2px 10px rgba(186, 130, 80, .07);
+  color: var(--bp-ink);
+  font-size: 13px;
+}
+
+.bp-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 7px;
+}
+
+.bp-title {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: .2px;
+}
+
+.bp-income {
+  font-size: 11.5px;
+  color: var(--bp-mute);
+  white-space: nowrap;
+}
+
+.bp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bp-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px 6px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, .55);
+}
+
+/* 行底部一条细进度：一眼看出占比，又不会盖住文字 */
+.bp-row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: var(--w, 0%);
+  background: linear-gradient(90deg, #2ECB90, #7BE3BB);
+  border-radius: 0 3px 3px 0;
+  opacity: .85;
+}
+
+.bp-row > * {
+  position: relative;
+  z-index: 1;
+}
+
+.bp-ico {
+  font-size: 13px;
+  line-height: 1;
+  width: 16px;
+  text-align: center;
+  flex: 0 0 auto;
+}
+
+.bp-nm {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 12.5px;
+  color: #4A5A50;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bp-amt {
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+  color: #1F5F49;
+  flex: 0 0 auto;
+}
+
+.bp-pct {
+  flex: 0 0 30px;
+  text-align: right;
+  font-size: 11px;
+  color: var(--bp-mute);
+  font-variant-numeric: tabular-nums;
+}
+
+.bp-sum {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 8px;
+  margin-top: 8px;
+  padding-top: 7px;
+  border-top: 1px dashed var(--bp-line);
+  font-size: 12px;
+  color: var(--bp-mute);
+}
+
+.bp-sum b {
+  text-align: right;
+  color: var(--bp-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.bp-save-label {
+  color: var(--bp-coral);
+}
+
+.bp-save-num {
+  color: var(--bp-coral) !important;
+}
+
+.bp-tip {
+  margin-top: 7px;
+  font-size: 11.5px;
+  line-height: 1.5;
+  color: var(--bp-mute);
+}
+
+.bp-acts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 9px;
+}
+
+.bp-btn {
+  flex: 1 1 auto;
+  min-height: 30px;
+  padding: 6px 10px;
+  border-radius: 9px;
+  border: 1px solid #EADFCF;
+  background: #fff;
+  color: #4A5A50;
+  font-size: 12.5px;
+  line-height: 1.2;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+
+.bp-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(180, 130, 80, .14);
+}
+
+.bp-btn.bp-primary {
+  background: linear-gradient(135deg, #2ECB90, #17A574);
+  border-color: transparent;
+  color: #fff;
+  font-weight: 600;
+}
+
+.bp-btn.bp-ghost {
+  flex: 0 0 auto;
+  background: transparent;
+  border-color: transparent;
+  color: var(--bp-mute);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.bp-btn.bp-goto {
+  margin-top: 8px;
+  width: 100%;
+}
+
+.bp-mark {
+  display: inline-block;
+  padding: 4px 0;
+  font-size: 12px;
+  color: var(--bp-mute);
+}
+
+.bp-done {
+  margin-top: 2px;
+  padding: 9px 11px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(46, 203, 144, .14), rgba(46, 203, 144, .05));
+  border: 1px solid rgba(35, 184, 131, .28);
+  font-size: 13px;
+  line-height: 1.55;
+  color: #1F5F49;
+}
+
+.bp-done b {
+  color: #147A56;
+}
+
+.bp-done-sub {
+  margin-top: 5px;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: #6C8479;
+  word-break: break-word;
+}
+
+.bp-guess {
+  margin-bottom: 6px;
+  font-size: 12.5px;
+  color: #8A6A45;
+}
+
+/* 卡片要占满气泡，别被 84% 挤成一条 */
+.ai-panel-log .msg.msg-wide,
+.chat-log .msg.msg-wide {
+  max-width: 100%;
+  width: 100%;
+  align-self: stretch;
+}
+
+.ai-panel-log .msg.ai .bubble.bubble-wide,
+.chat-log .msg.ai .bubble.bubble-wide {
+  max-width: 100%;
+  width: 100%;
+  padding: 8px 9px;
+}
+
+/* 消费教练页：卡片再宽一点，但别拉满整屏 */
+.chat-log .msg.ai .bubble.bubble-wide {
+  max-width: 560px;
+  background: #fff;
+  border: 1px solid #F0E3D2;
+}
+
+.chat-log .msg .bubble .bp-card {
+  font-size: 13.5px;
+}
+
+/* 手机端：按钮换行不挤压 */
+@media (max-width: 480px) {
+  .bp-pct {
+    flex-basis: 26px;
+  }
+
+  .bp-btn {
+    flex: 1 1 100%;
+  }
+
+  .bp-btn.bp-ghost {
+    flex: 1 1 100%;
+  }
+}

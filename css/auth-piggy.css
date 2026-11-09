@@ -1,0 +1,321 @@
+/* ============================================================
+   财悟·AI —— 登录页（白底主题 + 元气英雄小猪 + 全页财富装饰）
+   - 背景统一在 .auth-wrap：左右栏共享同一白底彩晕，绝不分层
+   - 小猪状态：idle / save（存钱→兴奋） / spend（消费→逃跑）
+   - 小猪造型：Q版大头小身 + 原创「英雄头带」（借通用母题、用品牌色，规避 IP 抄袭）
+   ============================================================ */
+
+/* ---------- 统一背景：白底为主 + 极淡粉/金/蓝光晕 + 点阵 + 流动光晕 ---------- */
+.auth-wrap {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(900px 700px at 14% 0%,   rgba(255, 222, 232, .60), transparent 60%),
+    radial-gradient(820px 680px at 102% 100%, rgba(255, 240, 210, .55), transparent 58%),
+    radial-gradient(620px 560px at 86% 8%,   rgba(212, 236, 255, .50), transparent 55%),
+    linear-gradient(160deg, #ffffff 0%, #fffaf6 52%, #fff3ec 100%);
+}
+.auth-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background-image:
+    radial-gradient(circle, rgba(120, 80, 100, .05) 1.4px, transparent 2px),
+    radial-gradient(circle, rgba(120, 80, 100, .03) 1px, transparent 2px);
+  background-size: 48px 48px, 31px 31px;
+  background-position: 0 0, 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+}
+.auth-wrap::after {
+  content: "";
+  position: absolute;
+  width: 60%; height: 60%;
+  left: -6%; top: -10%;
+  background: radial-gradient(circle, rgba(255, 214, 230, .55), transparent 70%);
+  filter: blur(14px);
+  pointer-events: none;
+  z-index: 0;
+  animation: asideGlow 16s ease-in-out infinite alternate;
+}
+@keyframes asideGlow {
+  0%   { transform: translate(0, 0)      scale(1);    opacity: .5; }
+  100% { transform: translate(45%, 32%) scale(1.25); opacity: .95; }
+}
+.auth-wrap > * { position: relative; z-index: 1; }
+
+/* 左右栏透明，共享整页背景 —— 关键：消除左右分层 */
+.auth-aside { background: transparent; overflow: visible; }
+.auth-aside::before, .auth-aside::after { content: none; }
+.auth-main { background: transparent; }
+
+/* 左上角品牌标志：白底上必须是深色，否则白字隐形（看起来像被遮挡） */
+.auth-aside .brand { color: #2b3a33; position: relative; z-index: 3; }
+.auth-aside .brand .logo { background: linear-gradient(135deg, #16c08a, #ff6b81); }
+
+/* ---------- 全页财富装饰：元宝 / 钱袋 / 金币 / 红包（不分栏，左右都有） ---------- */
+.auth-deco { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.auth-deco span {
+  position: absolute;
+  opacity: 0;
+  animation-name: decoFloat;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 6px 10px rgba(214, 120, 150, .22));
+}
+@keyframes decoFloat {
+  0%   { transform: translateY(26px)  rotate(0deg)  scale(.92); opacity: .45; }
+  12%  { opacity: .9; }
+  88%  { opacity: .9; }
+  100% { transform: translateY(-140px) rotate(22deg) scale(1.06); opacity: .45; }
+}
+/* 常驻呼吸装饰：任何时刻都可见，避免白背景显空 */
+.auth-deco span.deco-static {
+  animation-name: decoPulse;
+  opacity: .6;
+}
+@keyframes decoPulse {
+  0%, 100% { opacity: .6; transform: scale(.92) rotate(-6deg); }
+  50%      { opacity: .8; transform: scale(1.1) rotate(6deg); }
+}
+
+.pig-scene {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #4a3a30;
+  padding: 8px 0;
+  user-select: none;
+}
+
+.pig-kicker {
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: rgba(74, 58, 48, .7);
+  margin: 0 0 6px;
+}
+.pig-headline {
+  font-size: 26px;
+  line-height: 1.3;
+  margin: 0 0 4px;
+  font-weight: 800;
+  color: #2b3a33;
+}
+
+/* 舞台：存钱（左） · 小猪（中） · 消费（右） */
+.pig-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  width: 100%;
+  max-width: 660px;
+  margin: 18px 0 14px;
+}
+
+/* —— 两侧触发器（白底卡片，深色可读） —— */
+.pig-trigger {
+  flex: 0 0 96px;
+  border: 1.5px solid rgba(20, 120, 90, .28);
+  background: rgba(255, 255, 255, .88);
+  border-radius: 18px;
+  padding: 16px 10px;
+  color: #2b3a33;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+  font-family: inherit;
+  box-shadow: 0 8px 18px rgba(20, 90, 70, .10);
+}
+.pig-trigger:focus-visible { outline: 3px solid rgba(20, 120, 90, .55); outline-offset: 3px; }
+.pig-trigger .trigger-emoji { font-size: 30px; line-height: 1; }
+.pig-trigger .trigger-label { font-size: 17px; font-weight: 800; }
+.pig-trigger .trigger-sub { font-size: 11.5px; color: rgba(40, 60, 52, .62); }
+
+.pig-trigger.trigger-save { border-color: rgba(16, 192, 138, .40); }
+.pig-trigger.trigger-save:hover,
+.pig-trigger.trigger-save:focus-visible {
+  transform: translateY(-4px) scale(1.04);
+  background: #eafff6;
+  border-color: #16c08a;
+  box-shadow: 0 12px 26px rgba(16, 192, 138, .26);
+}
+.pig-trigger.trigger-spend { border-color: rgba(255, 120, 90, .42); }
+.pig-trigger.trigger-spend:hover,
+.pig-trigger.trigger-spend:focus-visible {
+  transform: translateY(-4px) scale(1.04);
+  background: #fff0ea;
+  border-color: #ff8a5b;
+  box-shadow: 0 12px 26px rgba(255, 120, 90, .26);
+}
+
+/* —— 小猪本体（放大版） —— */
+.pig-wrap {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  flex: 0 0 auto;
+  transition: transform .35s cubic-bezier(.34, 1.56, .64, 1);
+  will-change: transform;
+}
+.pig-float {
+  width: 100%;
+  height: 100%;
+  animation: pigFloat 3.2s ease-in-out infinite;
+  transform-origin: 50% 80%;
+}
+.pig { width: 100%; height: 100%; display: block; overflow: visible; filter: drop-shadow(0 18px 22px rgba(180, 90, 120, .22)); }
+
+/* 逃跑：整体往左溜（远离右侧「消费」），并轻微旋转 */
+.pig-scene.is-spend .pig-wrap { transform: translateX(-34px) rotate(-5deg); }
+
+/* 闲置 / 兴奋 / 惊吓 的浮动与抖动 */
+@keyframes pigFloat {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50%      { transform: translateY(-8px) rotate(0); }
+}
+.pig-scene.is-save .pig-float { animation: pigHappy .55s ease-in-out infinite; }
+@keyframes pigHappy {
+  0%, 100% { transform: translateY(0) scale(1, 1); }
+  30%      { transform: translateY(-16px) scale(1.04, .96); }
+  60%      { transform: translateY(0) scale(.96, 1.05); }
+}
+.pig-scene.is-spend .pig-float { animation: pigShake .16s linear infinite; }
+@keyframes pigShake {
+  0%   { transform: translateX(0) rotate(0); }
+  25%  { transform: translateX(-3px) rotate(-2deg); }
+  75%  { transform: translateX(3px) rotate(2deg); }
+  100% { transform: translateX(0) rotate(0); }
+}
+
+/* 小猪配色（立体：径向/线性渐变 + 高光 + 投影） */
+.pig-body  { fill: url(#pigBody); stroke: #e987a6; stroke-width: 3; }
+.pig-belly { fill: url(#pigBelly); }
+.pig-ear   { fill: url(#pigEar); stroke: #e987a6; stroke-width: 3; stroke-linejoin: round; }
+.pig-snout { fill: url(#pigSnout); stroke: #e987a6; stroke-width: 3; }
+.pig-nostril { fill: #c75a7c; }
+.pig-blush { fill: #ff5c7a; opacity: .35; transition: opacity .25s ease; }
+.pig-slot  { fill: #c75a7c; }
+.pig-leg   { fill: url(#pigLeg); stroke: #e987a6; stroke-width: 3; }
+.pig-tail  { fill: none; stroke: #e987a6; stroke-width: 4; stroke-linecap: round; }
+.pig-ground { fill: rgba(150, 95, 120, .20); }
+
+/* 原创英雄头带（品牌珊瑚红，规避 IP 抄袭） */
+.pig-band      { fill: #ff6b81; stroke: #e84e66; stroke-width: 2; stroke-linejoin: round; }
+.pig-band-tail { fill: #ff6b81; stroke: #e84e66; stroke-width: 2; stroke-linejoin: round; }
+.pig-badge     { fill: #ffd24d; stroke: #e8a93a; stroke-width: 2; }
+.pig-badge-in  { fill: #fff3c4; }
+.pig-badge-star{ fill: #e8a93a; }
+
+/* 眼睛 / 嘴巴：按状态切换可见性 */
+.eye-white { fill: #fff; stroke: #4a2632; stroke-width: 2.5; }
+.eye-follow .pupil-g { fill: #4a2632; transition: transform .12s ease-out; }
+.eye-follow .pupil { fill: #4a2632; stroke: none; }
+.eye-follow .glint { fill: #fff; stroke: none; }
+.eye-happy path  { fill: none; stroke: #4a2632; stroke-width: 5; stroke-linecap: round; }
+.eye-scared circle { fill: #fff; stroke: #4a2632; stroke-width: 2.5; }
+.eye-scared circle:last-of-type,
+.eye-scared .pupil { fill: #4a2632; stroke: none; }
+.eye-scared .brow { fill: none; stroke: #4a2632; stroke-width: 4; stroke-linecap: round; }
+.mouth-smile { fill: none; stroke: #4a2632; stroke-width: 4; stroke-linecap: round; }
+.mouth-frown { fill: none; stroke: #4a2632; stroke-width: 4; stroke-linecap: round; }
+
+/* 跟随眼仅在闲置态显示；兴奋/逃跑态切到笑眼/惊恐眼 */
+.eye-follow { opacity: 0; transition: opacity .18s ease; }
+.pig-scene:not(.is-save):not(.is-spend) .eye-follow { opacity: 1; }
+
+.eye-happy, .eye-scared, .mouth-frown { opacity: 0; transition: opacity .18s ease; }
+
+.pig-scene.is-save .eye-happy { opacity: 1; }
+.pig-scene.is-spend .eye-scared { opacity: 1; }
+.pig-scene.is-save .mouth-smile { opacity: 1; }
+.pig-scene.is-spend .mouth-smile { opacity: 0; }
+.pig-scene.is-spend .mouth-frown { opacity: 1; }
+.pig-scene.is-save .pig-blush { opacity: .6; }
+
+/* 说话气泡（白底深字 + 边框，白背景下清晰） */
+.pig-bubble {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+  color: #15795a;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 14px;
+  white-space: nowrap;
+  border: 1.5px solid rgba(20, 120, 90, .18);
+  box-shadow: 0 10px 22px rgba(20, 90, 70, .16);
+  opacity: 0;
+  transition: opacity .2s ease, transform .2s ease;
+  pointer-events: none;
+}
+.pig-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 7px solid transparent;
+  border-top-color: #fff;
+  border-bottom: 0;
+}
+.pig-scene.is-save .pig-bubble,
+.pig-scene.is-spend .pig-bubble { opacity: 1; transform: translateX(-50%) translateY(-6px); }
+
+/* 落下的金币（存钱时） */
+.pig-coin {
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 26px;
+  opacity: 0;
+  pointer-events: none;
+}
+.pig-scene.is-save .pig-coin { animation: coinDrop .8s ease-in forwards; }
+@keyframes coinDrop {
+  0%   { opacity: 0; transform: translateX(-50%) translateY(-26px) rotate(0); }
+  25%  { opacity: 1; }
+  70%  { opacity: 1; transform: translateX(-50%) translateY(24px) rotate(180deg); }
+  100% { opacity: 0; transform: translateX(-50%) translateY(34px) rotate(360deg); }
+}
+
+/* 惊吓汗滴（消费时） */
+.pig-sweat {
+  position: absolute;
+  top: 40px;
+  right: 14px;
+  font-size: 20px;
+  opacity: 0;
+  pointer-events: none;
+}
+.pig-scene.is-spend .pig-sweat { animation: sweatFly .7s ease-in-out infinite; }
+@keyframes sweatFly {
+  0%   { opacity: 0; transform: translate(0, 0) scale(.8); }
+  40%  { opacity: 1; }
+  100% { opacity: 0; transform: translate(14px, 18px) scale(1.1); }
+}
+
+.pig-tip {
+  font-size: 13px;
+  color: rgba(74, 58, 48, .72);
+  margin: 0;
+}
+
+/* 小屏：侧栏隐藏规则继承原样（登录表单优先），此处仅保证场景自身不出横向滚动 */
+@media (max-width: 600px) {
+  .pig-stage { gap: 10px; }
+  .pig-trigger { flex-basis: 78px; padding: 12px 6px; }
+  .pig-trigger .trigger-emoji { font-size: 24px; }
+  .pig-wrap { width: 240px; height: 240px; }
+}

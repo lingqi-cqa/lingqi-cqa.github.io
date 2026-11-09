@@ -1,0 +1,336 @@
+/* ============================================================
+   SmartPig · 一页看懂（比赛亮点页） —— highlight.html 专属样式
+   复用 landing.css / brand.css 的变量与卡片类（container / section-title /
+   bot-card / btn 等），此处只补充布局与配色骨架。
+   ============================================================ */
+
+.hl-hero {
+  position: relative;
+  padding: 138px 0 92px;
+  color: #f6f4ef;
+  overflow: hidden;
+  background:
+    radial-gradient(1100px 560px at 82% -12%, rgba(63, 217, 154, .26), transparent 60%),
+    radial-gradient(900px 520px at 8% 8%, rgba(243, 137, 171, .22), transparent 55%),
+    linear-gradient(180deg, #0f1410, #141110 70%, #161311);
+}
+.hl-hero::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 90px;
+  background: linear-gradient(180deg, transparent, #ffffff);
+}
+.hl-hero-inner { position: relative; z-index: 1; max-width: 880px; }
+.hl-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: #d8ffe9;
+  background: rgba(63, 217, 154, .14);
+  box-shadow: inset 0 0 0 1px rgba(63, 217, 154, .35);
+}
+.hl-hero-title {
+  margin: 22px 0 0;
+  font-family: var(--font-display, inherit);
+  font-weight: 800;
+  font-size: clamp(34px, 5vw, 58px);
+  line-height: 1.08;
+  letter-spacing: -.01em;
+  color: #fff;
+  text-wrap: balance;
+}
+.hl-hero-title .hl-em {
+  color: #5ee0a6;
+}
+.hl-hero-sub {
+  margin: 20px 0 0;
+  max-width: 620px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: rgba(246, 244, 239, .78);
+}
+.hl-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 32px;
+}
+.hl-hero-actions .btn { height: 50px; }
+
+/* —— 通用 section —— */
+.hl-section { padding: 84px 0; }
+.hl-section.alt { background: #faf8f5; }
+.hl-section-head { max-width: 720px; margin: 0 auto 44px; text-align: center; }
+.hl-section-head .section-title { margin: 0; }
+.hl-section-head .section-sub { margin: 14px auto 0; }
+
+/* —— 痛点卡片 —— */
+.hl-grid { display: grid; gap: 20px; }
+.hl-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.hl-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.hl-pain {
+  background: #fff;
+  border: 1px solid rgba(23, 22, 19, .08);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(11, 42, 31, .06);
+}
+.hl-pain .hl-pain-ico { font-size: 30px; }
+.hl-pain h3 { margin: 14px 0 8px; font-size: 18px; font-weight: 700; color: var(--ink, #1a1a1a); }
+.hl-pain p { margin: 0; font-size: 15px; line-height: 1.65; color: var(--text-2, #5a5a5a); }
+
+/* —— 亮点卡片（复用 bot-card 外观，这里只补强调色条） —— */
+.hl-feature { position: relative; overflow: hidden; }
+.hl-feature::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--gradient-mint, linear-gradient(180deg, #3fd99a, #23b883));
+}
+
+/* —— 对比表 —— */
+.hl-cmp {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: #fff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 12px 36px rgba(11, 42, 31, .08);
+  font-size: 15px;
+}
+.hl-cmp th, .hl-cmp td { padding: 18px 22px; text-align: left; vertical-align: top; }
+.hl-cmp thead th { background: #0f1410; color: #fff; font-weight: 600; }
+.hl-cmp thead th:first-child { width: 30%; }
+.hl-cmp tbody tr + tr td { border-top: 1px solid rgba(23, 22, 19, .07); }
+.hl-cmp .hl-col-old { color: var(--text-2, #5a5a5a); }
+.hl-cmp .hl-col-new { color: var(--primary-deep, #0c6a4b); font-weight: 600; }
+.hl-cmp .hl-check { color: #16a06a; font-weight: 700; }
+.hl-cmp .hl-cross { color: #c0392b; }
+
+/* —— 技术栈 chips —— */
+.hl-chips { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; }
+.hl-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0c6a4b;
+  background: rgba(63, 217, 154, .12);
+  box-shadow: inset 0 0 0 1px rgba(35, 184, 131, .3);
+}
+.hl-chip b { color: #0a573b; }
+
+/* —— 价值大字 —— */
+.hl-bigstat { text-align: center; }
+.hl-bigstat .hl-num {
+  font-family: var(--font-display, inherit);
+  font-weight: 800;
+  font-size: clamp(40px, 7vw, 76px);
+  line-height: 1;
+  background: var(--gradient-mint, linear-gradient(90deg, #3fd99a, #23b883));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hl-bigstat p { margin: 12px 0 0; font-size: 16px; color: var(--text-2, #5a5a5a); }
+
+/* —— 产品一览画廊 —— */
+.hl-gallery-sec { padding-bottom: 96px; }
+.hl-gallery {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  max-width: 980px;
+  margin: 0 auto;
+}
+.hl-gal-viewport { flex: 1; overflow: hidden; border-radius: 22px; }
+.hl-gal-track {
+  display: flex;
+  transition: transform .55s cubic-bezier(.22,.61,.36,1);
+  will-change: transform;
+}
+.hl-slide {
+  flex: 0 0 100%;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  background: linear-gradient(135deg, #ffffff, #f3faf6);
+  border: 1px solid rgba(23,22,19,.08);
+  border-radius: 22px;
+  padding: 30px;
+  box-shadow: 0 18px 44px rgba(11,42,31,.10);
+}
+.hl-slide-cap { flex: 1; min-width: 0; }
+.hl-slide-cap h3 {
+  margin: 0 0 10px;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--ink, #1a1a1a);
+}
+.hl-slide-cap p { margin: 0 0 14px; font-size: 15px; line-height: 1.65; color: var(--text-2, #5a5a5a); }
+.hl-slide-cap ul { margin: 0; padding-left: 18px; }
+.hl-slide-cap li { font-size: 14px; line-height: 1.9; color: #2f4a3f; }
+
+/* 设备样机 */
+.hl-mock {
+  position: relative;
+  flex: 0 0 268px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(23,22,19,.10);
+  box-shadow: 0 10px 26px rgba(11,42,31,.14);
+  transition: transform .28s cubic-bezier(.22,.61,.36,1), box-shadow .28s ease;
+}
+/* hover「体验此功能」时，整台样机轻微放大 + 投影加深，示意可点 */
+.hl-mock:has(.mk-try:hover) {
+  transform: scale(1.025);
+  box-shadow: 0 18px 44px rgba(11,42,31,.22);
+}
+.mk-try {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: #0c6a4b;
+  padding: 10px;
+  background: #eafaf2;
+  border-top: 1px solid rgba(35,184,131,.18);
+  transition: background .15s ease, box-shadow .15s ease;
+}
+.mk-try:hover {
+  background: #d8f6e8;
+  box-shadow: inset 0 -3px 0 rgba(35,184,131,.35);
+}
+/* 脉冲强调按钮（一键路演）：本体缩放 + 发光脉动
+   说明：.btn 基类为 overflow:hidden，扩散环 ::after 会被裁切，
+   故改为本体 transform 缩放 + box-shadow 发光（不被自身 overflow 裁切），
+   同时保留 .btn-primary::after 的扫光特效。 */
+.btn-pulse {
+  animation: hl-pulse 2.2s ease-in-out infinite;
+}
+.btn-pulse:hover { animation-play-state: paused; }
+@keyframes hl-pulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow:
+      0 0 0 1px rgba(35,184,131,.45),
+      0 0 28px rgba(63,217,154,.35),
+      0 10px 34px rgba(12,106,75,.30),
+      inset 0 -2px 6px rgba(11,42,31,.18);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow:
+      0 0 0 1px rgba(35,184,131,.55),
+      0 0 46px rgba(63,217,154,.60),
+      0 16px 46px rgba(12,106,75,.40),
+      inset 0 -2px 6px rgba(11,42,31,.18);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hl-mock { transition: none; }
+  .hl-mock:has(.mk-try:hover) { transform: none; }
+  .btn-pulse { animation: none; }
+}
+.mk-bar {
+  display: flex; align-items: center; gap: 6px;
+  padding: 9px 12px;
+  background: linear-gradient(90deg, #0f1410, #1c2620);
+}
+.mk-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.35); }
+.mk-url {
+  margin-left: 8px; font-size: 11px; color: rgba(255,255,255,.7);
+  background: rgba(255,255,255,.08); padding: 3px 10px; border-radius: 999px;
+}
+.mk-body { padding: 16px 15px 18px; }
+.mk-toggle { display: inline-flex; background: #eef3f0; border-radius: 999px; padding: 3px; font-size: 12px; }
+.mk-toggle span { padding: 4px 12px; border-radius: 999px; color: #5a5a5a; }
+.mk-toggle .mk-on { background: #16c08a; color: #fff; font-weight: 700; }
+.mk-amount { margin: 12px 0; font-size: 34px; font-weight: 800; color: #0c6a4b; letter-spacing: -.02em; }
+.mk-am-dec { font-size: 20px; color: #8aa397; }
+.mk-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.mk-chip { font-size: 12px; padding: 5px 10px; border-radius: 999px; background: #f0f4f2; color: #4a5a52; }
+.mk-chip-on { background: #d8f6e8; color: #0c6a4b; font-weight: 700; }
+.mk-note { font-size: 12px; color: #9aa6a0; margin-bottom: 12px; }
+.mk-btn { width: 100%; border: 0; border-radius: 12px; padding: 11px; font-size: 14px; font-weight: 800; color: #fff; background: linear-gradient(90deg, #3fd99a, #23b883); cursor: pointer; }
+.mk-h { font-size: 13px; font-weight: 700; color: #1a1a1a; margin-bottom: 12px; }
+.mk-bars { display: flex; flex-direction: column; gap: 9px; }
+.mk-row { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #4a5a52; }
+.mk-lab { width: 30px; flex: none; }
+.mk-track { flex: 1; height: 8px; border-radius: 999px; background: #eef3f0; overflow: hidden; }
+.mk-track i { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, #3fd99a, #23b883); }
+.mk-row b { width: 26px; text-align: right; flex: none; color: #0c6a4b; font-weight: 700; }
+.mk-warn { margin-top: 12px; font-size: 11px; color: #b4642b; background: #fff3e6; border-radius: 10px; padding: 8px 10px; }
+.mk-goal { margin-bottom: 12px; }
+.mk-goal-top { display: flex; justify-content: space-between; font-size: 12px; color: #2f4a3f; margin-bottom: 5px; }
+.mk-goal-top b { color: #0c6a4b; }
+.mk-goal small { display: block; margin-top: 4px; font-size: 10px; color: #9aa6a0; }
+.mk-chat { display: flex; flex-direction: column; gap: 8px; }
+.mk-bub { font-size: 11px; line-height: 1.5; padding: 8px 11px; border-radius: 12px; max-width: 92%; }
+.mk-bub-me { align-self: flex-end; background: #16c08a; color: #fff; border-bottom-right-radius: 3px; }
+.mk-bub-ai { align-self: flex-start; background: #eef3f0; color: #2f4a3f; border-bottom-left-radius: 3px; }
+.mk-input { margin-top: 4px; font-size: 11px; color: #9aa6a0; border: 1px solid #e3eae6; border-radius: 10px; padding: 8px 11px; }
+.mk-health { text-align: center; }
+.mk-score { font-size: 46px; font-weight: 800; color: #0c6a4b; line-height: 1; }
+.mk-score span { font-size: 16px; color: #8aa397; margin-left: 2px; }
+.mk-score-lab { font-size: 12px; color: #4a5a52; margin: 6px 0 14px; }
+.mk-metric { display: flex; justify-content: space-between; font-size: 12px; color: #2f4a3f; padding: 7px 0; border-top: 1px solid #eef3f0; }
+.mk-metric b { color: #0c6a4b; }
+.mk-cool { text-align: center; padding: 6px 2px; }
+.mk-cool-ico { font-size: 40px; }
+.mk-cool-t { font-size: 15px; font-weight: 800; color: #1a1a1a; margin: 8px 0 4px; }
+.mk-cool-sub { font-size: 11px; color: #9aa6a0; margin-bottom: 14px; }
+.mk-cool-btns { display: flex; gap: 8px; }
+.mk-cool-no, .mk-cool-yes { flex: 1; font-size: 12px; font-weight: 700; padding: 9px; border-radius: 10px; }
+.mk-cool-no { background: #eef3f0; color: #5a5a5a; }
+.mk-cool-yes { background: #16c08a; color: #fff; }
+
+/* 画廊箭头与指示点 */
+.hl-gal-arrow {
+  flex: none;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(23,22,19,.12);
+  background: #fff;
+  color: #0c6a4b;
+  font-size: 22px; line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(11,42,31,.10);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.hl-gal-arrow:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(11,42,31,.16); }
+.hl-gal-dots { display: flex; justify-content: center; gap: 8px; margin-top: 22px; }
+.hl-gal-dots button {
+  width: 9px; height: 9px; padding: 0; border: 0; border-radius: 50%;
+  background: rgba(23,22,19,.18); cursor: pointer; transition: all .2s ease;
+}
+.hl-gal-dots button.is-active { width: 26px; border-radius: 999px; background: #16c08a; }
+
+/* —— 响应式 —— */
+@media (max-width: 860px) {
+  .hl-grid.cols-3 { grid-template-columns: 1fr; }
+  .hl-grid.cols-2 { grid-template-columns: 1fr; }
+  .hl-section { padding: 64px 0; }
+  .hl-hero { padding: 116px 0 76px; }
+  .hl-slide { flex-direction: column; gap: 20px; padding: 22px; }
+  .hl-mock { flex: none; width: 100%; max-width: 300px; }
+}
+@media (max-width: 600px) {
+  .hl-cmp { font-size: 13px; }
+  .hl-cmp th, .hl-cmp td { padding: 14px; }
+  .hl-gallery { gap: 6px; }
+  .hl-gal-arrow { width: 34px; height: 34px; font-size: 18px; }
+  .hl-hero-actions .btn { flex: 1 1 100%; }
+}

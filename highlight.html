@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>一页看懂 SmartPig · 让每一笔消费都被看见</title>
+  <meta name="description" content="SmartPig 智能记账比赛亮点页：痛点、六大功能、技术架构与比赛价值，一页看完。" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="stylesheet" href="css/landing.css" />
+  <link rel="stylesheet" href="css/brand.css" />
+  <link rel="stylesheet" href="css/highlight.css" />
+</head>
+<body>
+
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <!-- 顶部导航 -->
+  <header class="site-header">
+    <div class="container">
+      <a class="nav-logo" href="index.html" aria-label="SmartPig 智能记账 — 首页">
+        <img class="brand-logo" src="assets/smartpig-mark.png" alt="" aria-hidden="true" />
+        <span class="brand-stack">
+          <span class="brand-name">SmartPig</span>
+          <span class="brand-tag">SMART BOOKKEEPING</span>
+        </span>
+      </a>
+      <nav class="nav-links" aria-label="主导航">
+        <a class="nav-link" href="index.html">首页</a>
+        <a class="nav-link" href="highlight.html">一页看懂</a>
+        <a class="nav-link" href="dashboard.html">演示</a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:12px">
+        <a class="nav-cta nav-cta-ghost nav-cta-desktop" href="dashboard.html">
+          <span aria-hidden="true">🎯</span> 演示
+        </a>
+        <a class="nav-cta nav-cta-desktop" href="login.html#register">
+          开始记账
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </a>
+        <button id="navBurger" type="button" class="nav-burger" aria-expanded="false" aria-controls="mobileMenu" aria-label="打开菜单">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <line class="burger-line burger-line-1" x1="1.5" y1="7.5" x2="18.5" y2="7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            <line class="burger-line burger-line-2" x1="1.5" y1="12.5" x2="18.5" y2="12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 移动端菜单 -->
+  <div id="mobileMenu" class="mobile-menu" hidden>
+    <nav aria-label="移动端导航">
+      <a class="mobile-link" href="index.html">首页</a>
+      <a class="mobile-link" href="highlight.html">一页看懂</a>
+      <a class="mobile-link" href="dashboard.html">🎯 免登录体验演示</a>
+      <a class="nav-cta" href="login.html#register">
+        开始记账
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+      </a>
+    </nav>
+  </div>
+
+  <main id="main">
+
+    <!-- Hero -->
+    <section class="hl-hero">
+      <div class="container hl-hero-inner">
+        <span class="hl-eyebrow">🏆 比赛亮点页 · 一页看懂</span>
+        <h1 class="hl-hero-title">
+          每一笔钱都算得清，<br />
+          <span class="hl-em">每一笔消费都被看见</span>
+        </h1>
+        <p class="hl-hero-sub">
+          SmartPig 是一款 AI 智能记账平台：选类型、填金额，秒级完成记账；用图表与 AI 教练
+          把「钱去哪了」讲清楚，再用小目标与冷静区帮你把钱留住。本页用最短篇幅，把产品价值与技术亮点一次讲透。
+        </p>
+        <div class="hl-hero-actions">
+          <a class="btn btn-primary btn-pulse" href="dashboard.html?tour=1">
+            🎬 一键路演
+          </a>
+          <a class="btn btn-ghost" href="dashboard.html">
+            🎯 免登录体验演示
+            <span class="btn-tag">只读</span>
+          </a>
+          <a class="btn btn-ghost" href="login.html#register">
+            注册，记录自己的账本
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 产品一览：自动轮播画廊 -->
+    <section class="hl-section hl-gallery-sec">
+      <div class="container">
+        <div class="hl-section-head">
+          <h2 class="section-title">产品一览：六屏看懂 SmartPig</h2>
+          <p class="section-sub">界面自动轮播（也可手动切换）· 真实可交互效果见「免登录体验演示」</p>
+        </div>
+
+        <div class="hl-gallery" id="hlGallery">
+          <button class="hl-gal-arrow hl-gal-prev" type="button" aria-label="上一张">‹</button>
+          <div class="hl-gal-viewport">
+            <div class="hl-gal-track" id="hlGalTrack">
+
+              <!-- 1 一笔入魂 -->
+              <div class="hl-slide" data-label="一笔入魂">
+                <div class="hl-mock">
+                  <div class="mk-bar"><span class="mk-dot"></span><span class="mk-dot"></span><span class="mk-dot"></span><span class="mk-url">smartpig · 记账</span></div>
+                  <div class="mk-body">
+                    <div class="mk-toggle"><span class="mk-on">支出</span><span>收入</span></div>
+                    <div class="mk-amount">¥ 45<span class="mk-am-dec">.00</span></div>
+                    <div class="mk-chips">
+                      <span class="mk-chip mk-chip-on">🍱 餐饮</span>
+                      <span class="mk-chip">🚌 交通</span>
+                      <span class="mk-chip">🛍️ 购物</span>
+                    </div>
+                    <div class="mk-note">午餐 · 麦当劳</div>
+                    <button class="mk-btn">记一笔 ✓</button>
+                  </div>
+                  <a class="mk-try" href="dashboard.html?tour=1#quick">↗ 体验此功能</a>
+                </div>
+                <div class="hl-slide-cap">
+                  <h3>一笔入魂</h3>
+                  <p>选类型、填金额，3 秒完成。常用分类智能推荐，记账像呼吸一样自然。</p>
+                  <ul>
+                    <li>支出 / 收入一键切换</li>
+                    <li>智能卡路里 & 分类识别</li>
+                    <li>语音、小票 OCR 多入口记账</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- 2 钱去哪了 -->
+              <div class="hl-slide" data-label="钱去哪了">
+                <div class="hl-mock">
+                  <div class="mk-bar"><span class="mk-dot"></span><span class="mk-dot"></span><span class="mk-dot"></span><span class="mk-url">smartpig · 分析</span></div>
+                  <div class="mk-body">
+                    <div class="mk-h">本月消费结构</div>
+                    <div class="mk-bars">
+                      <div class="mk-row"><span class="mk-lab">餐饮</span><div class="mk-track"><i style="width:62%"></i></div><b>62%</b></div>
+                      <div class="mk-row"><span class="mk-lab">购物</span><div class="mk-track"><i style="width:24%"></i></div><b>24%</b></div>
+                      <div class="mk-row"><span class="mk-lab">交通</span><div class="mk-track"><i style="width:10%"></i></div><b>10%</b></div>
+                      <div class="mk-row"><span class="mk-lab">其他</span><div class="mk-track"><i style="width:4%"></i></div><b>4%</b></div>
+                    </div>
+                    <div class="mk-warn">⚠️ 餐饮超支 ¥340，已超月预算 27%</div>
+                  </div>
+                  <a class="mk-try" href="dashboard.html?tour=1#manage">↗ 体验此功能</a>
+                </div>
+                <div class="hl-slide-cap">
+                  <h3>钱去哪了</h3>
+                  <p>明细、消费排行、跨月对比一目了然；分类预算超支自动预警。</p>
+                  <ul>
+                    <li>消费结构环形 / 条形图</li>
+                    <li>跨月对比趋势</li>
+                    <li>超支自动提醒</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- 3 小目标 -->
+              <div class="hl-slide" data-label="小目标">
+                <div class="hl-mock">
+                  <div class="mk-bar"><span class="mk-dot"></span><span class="mk-dot"></span><span class="mk-dot"></span><span class="mk-url">smartpig · 目标</span></div>
+                  <div class="mk-body">
+                    <div class="mk-h">我的小目标</div>
+                    <div class="mk-goal"><div class="mk-goal-top"><span>✈️ 旅行基金</span><b>45%</b></div><div class="mk-track"><i style="width:45%"></i></div><small>¥4,500 / ¥10,000</small></div>
+                    <div class="mk-goal"><div class="mk-goal-top"><span>🛡️ 应急金</span><b>40%</b></div><div class="mk-track"><i style="width:40%"></i></div><small>¥12,000 / ¥30,000</small></div>
+                    <div class="mk-goal"><div class="mk-goal-top"><span>💻 数码换新</span><b>26%</b></div><div class="mk-track"><i style="width:26%"></i></div><small>¥2,100 / ¥8,000</small></div>
+                  </div>
+                  <a class="mk-try" href="dashboard.html?tour=1#goals">↗ 体验此功能</a>
+                </div>
+                <div class="hl-slide-cap">
+                  <h3>小目标</h3>
+                  <p>定一个小目标，看结余一点点变多。AI 预测达成时间并给建议。</p>
+                  <ul>
+                    <li>进度可视化</li>
+                    <li>AI 达成时间预测</li>
+                    <li>自动按结余划拨</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- 4 消费教练 -->
+              <div class="hl-slide" data-label="消费教练">
+                <div class="hl-mock">
+                  <div class="mk-bar"><span class="mk-dot"></span><span class="mk-dot"></span><span class="mk-dot"></span><span class="mk-url">smartpig · 教练</span></div>
+                  <div class="mk-body mk-chat">
+                    <div class="mk-bub mk-bub-me">这个月奶茶花了多少？</div>
+                    <div class="mk-bub mk-bub-ai">¥186，占餐饮 38%。建议每周设 ¥40 上限，可省约 ¥90/月 🤖</div>
+                    <div class="mk-bub mk-bub-me">帮我做个下月预算</div>
+                    <div class="mk-bub mk-bub-ai">已生成：餐饮¥1200 · 交通¥400 · 购物¥800，结余预计 +¥2100</div>
+                    <div class="mk-input">问点什么…</div>
+                  </div>
+                  <a class="mk-try" href="dashboard.html?tour=1#ai">↗ 体验此功能</a>
+                </div>
+                <div class="hl-slide-cap">
+                  <h3>消费教练</h3>
+                  <p>通义千问实时对话，一个人的私人财务教练：识别风险、预测、出报告。</p>
+                  <ul>
+                    <li>无限问答</li>
+                    <li>消费风险识别</li>
+                    <li>自动月度报告</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- 5 财务免疫力 -->
+              <div class="hl-slide" data-label="财务免疫力">
+                <div class="hl-mock">
+                  <div class="mk-bar"><span class="mk-dot"></span><span class="mk-dot"></span><span class="mk-dot"></span><span class="mk-url">smartpig · 健康</span></div>
+                  <div class="mk-body mk-health">
+                    <div class="mk-score">72<span>分</span></div>
+                    <div class="mk-score-lab">财务健康分 · 良好</div>
+                    <div class="mk-metric"><span>应急金覆盖</span><b>1.2 月</b></div>
+                    <div class="mk-metric"><span>收支比</span><b>1.4</b></div>
+                    <div class="mk-metric"><span>消费稳定性</span><b>中</b></div>
+                  </div>
+                  <a class="mk-try" href="dashboard.html?tour=1#health">↗ 体验此功能</a>
+                </div>
+                <div class="hl-slide-cap">
+                  <h3>财务免疫力</h3>
+                  <p>给整体财务状况打一个「健康分」，让你心里有数、规划有依据。</p>
+                  <ul>
+                    <li>应急金覆盖评估</li>
+                    <li>收支结构分析</li>
+                    <li>稳定性评分</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- 6 冷静区 -->
+              <div class="hl-slide" data-label="冷静区">
+                <div class="hl-mock">
+                  <div class="mk-bar"><span class="mk-dot"></span><span class="mk-dot"></span><span class="mk-dot"></span><span class="mk-url">smartpig · 冷静区</span></div>
+                  <div class="mk-body mk-cool">
+                    <div class="mk-cool-ico">🧊</div>
+                    <div class="mk-cool-t">想买 ¥1,999 降噪耳机</div>
+                    <div class="mk-cool-sub">已冷静 02:14 · 相当于 5 顿火锅 🍲</div>
+                    <div class="mk-cool-btns">
+                      <span class="mk-cool-no">先放放</span>
+                      <span class="mk-cool-yes">我已想清楚</span>
+                    </div>
+                  </div>
+                  <a class="mk-try" href="dashboard.html?tour=1#alerts">↗ 体验此功能</a>
+                </div>
+                <div class="hl-slide-cap">
+                  <h3>冷静区</h3>
+                  <p>大额或高风险消费前先「冷静一下」，把决策权交还给你自己。</p>
+                  <ul>
+                    <li>冲动念头记录</li>
+                    <li>代价换算</li>
+                    <li>延时决策</li>
+                  </ul>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <button class="hl-gal-arrow hl-gal-next" type="button" aria-label="下一张">›</button>
+        </div>
+
+        <div class="hl-gal-dots" id="hlGalDots" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <!-- 痛点 -->
+    <section class="hl-section">
+      <div class="container">
+        <div class="hl-section-head">
+          <h2 class="section-title">我们解决了什么</h2>
+          <p class="section-sub">年轻人不是不爱存钱，而是「看不见钱去哪了」。</p>
+        </div>
+        <div class="hl-grid cols-3">
+          <article class="hl-pain">
+            <div class="hl-pain-ico">🫥</div>
+            <h3>钱悄悄溜走</h3>
+            <p>奶茶 18、打车 32、深夜那单 199……单看都不心疼，月底一看余额懵了。消费是「碎」的，没有全局视角。</p>
+          </article>
+          <article class="hl-pain">
+            <div class="hl-pain-ico">📒</div>
+            <h3>记账太累坚持不下去</h3>
+            <p>传统记账要分类、要填备注、要记时间，步骤越多越容易放弃。多数人第 3 天就停更。</p>
+          </article>
+          <article class="hl-pain">
+            <div class="hl-pain-ico">🧊</div>
+            <h3>想存钱却总冲动</h3>
+            <p>没有目标感、没有预警、没有「冷静一下」的出口，工资到手就被情绪消费吃掉。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 六大亮点 -->
+    <section class="hl-section alt">
+      <div class="container">
+        <div class="hl-section-head">
+          <h2 class="section-title">六大亮点，一页看完</h2>
+          <p class="section-sub">从「记一笔」到「管住钱」，SmartPig 把记账做成一件轻松且有用的事。</p>
+        </div>
+        <div class="hl-grid cols-3">
+          <article class="bot-card hl-feature reveal">
+            <div class="bot-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+            <h3 class="bot-title">一笔入魂</h3>
+            <p class="bot-desc">选类型、填金额，秒级完成。支出 / 收入一键切换，常用分类智能推荐，记账像呼吸一样自然。</p>
+          </article>
+          <article class="bot-card hl-feature reveal">
+            <div class="bot-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg></div>
+            <h3 class="bot-title">钱去哪了</h3>
+            <p class="bot-desc">明细、消费排行、跨月对比一目了然；分类预算超支自动预警，每一笔都清清楚楚。</p>
+          </article>
+          <article class="bot-card hl-feature reveal">
+            <div class="bot-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+            <h3 class="bot-title">小目标</h3>
+            <p class="bot-desc">定一个小目标，看结余一点点变多。AI 按你的月结余预测达成时间，并给出调整建议。</p>
+          </article>
+          <article class="bot-card hl-feature reveal">
+            <div class="bot-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4"/><circle cx="12" cy="3" r="1.6"/><circle cx="9" cy="13" r="1.3"/><circle cx="15" cy="13" r="1.3"/><path d="M9.5 16h5"/></svg></div>
+            <h3 class="bot-title">消费教练</h3>
+            <p class="bot-desc">通义千问实时对话、无限问答：消费风险识别、财务预测、自动报告与自适应预算，一个人的私人财务教练。</p>
+          </article>
+          <article class="bot-card hl-feature reveal">
+            <div class="bot-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M3 12h18"/><circle cx="12" cy="12" r="9"/></svg></div>
+            <h3 class="bot-title">财务免疫力</h3>
+            <p class="bot-desc">给整体财务状况打一个「健康分」：应急金覆盖、收支结构、消费稳定性，让你心里有数。</p>
+          </article>
+          <article class="bot-card hl-feature reveal">
+            <div class="bot-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2z"/><path d="m5 5 14 14"/></svg></div>
+            <h3 class="bot-title">冷静区</h3>
+            <p class="bot-desc">大额或高风险消费前先「冷静一下」，记录冲动念头、算清代价，把决策权交还给自己。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 价值大字 -->
+    <section class="hl-section">
+      <div class="container hl-bigstat">
+        <div class="hl-num">3 秒</div>
+        <p>从打开到记完一笔；一个人也能拥有的私人财务教练。</p>
+      </div>
+      <div class="hl-chips" style="margin-top:36px">
+        <span class="hl-chip">⚡ <b>秒级记账</b></span>
+        <span class="hl-chip">📊 <b>可视化分析</b></span>
+        <span class="hl-chip">🤖 <b>AI 教练</b></span>
+        <span class="hl-chip">🎯 <b>目标储蓄</b></span>
+        <span class="hl-chip">🧊 <b>冲动防御</b></span>
+      </div>
+    </section>
+
+    <!-- 比赛价值对比 -->
+    <section class="hl-section alt">
+      <div class="container">
+        <div class="hl-section-head">
+          <h2 class="section-title">比赛价值：传统记账 vs SmartPig</h2>
+          <p class="section-sub">同样的「记账」，我们做的不是记录，而是「让消费被看见、被理解、被改善」。</p>
+        </div>
+        <table class="hl-cmp">
+          <thead>
+            <tr>
+              <th>维度</th>
+              <th>传统记账 App</th>
+              <th>SmartPig</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>记账门槛</td>
+              <td class="hl-col-old">分类、备注、时间，步骤繁琐</td>
+              <td class="hl-col-new"><span class="hl-check">✓</span> 选类型 + 金额，3 秒完成</td>
+            </tr>
+            <tr>
+              <td>数据洞察</td>
+              <td class="hl-col-old">只有流水列表，靠自己算</td>
+              <td class="hl-col-new"><span class="hl-check">✓</span> 排行 / 跨月对比 / 预算预警</td>
+            </tr>
+            <tr>
+              <td>智能建议</td>
+              <td class="hl-col-old"><span class="hl-cross">✕</span> 无</td>
+              <td class="hl-col-new"><span class="hl-check">✓</span> 通义千问实时对话教练</td>
+            </tr>
+            <tr>
+              <td>存钱动力</td>
+              <td class="hl-col-old">靠自律，容易放弃</td>
+              <td class="hl-col-new"><span class="hl-check">✓</span> 小目标进度 + AI 达成预测</td>
+            </tr>
+            <tr>
+              <td>冲动消费</td>
+              <td class="hl-col-old"><span class="hl-cross">✕</span> 无防御</td>
+              <td class="hl-col-new"><span class="hl-check">✓</span> 冷静区 + 风险识别</td>
+            </tr>
+            <tr>
+              <td>部署与体验</td>
+              <td class="hl-col-old">需下载安装</td>
+              <td class="hl-col-new"><span class="hl-check">✓</span> 浏览器即开即用 + 免登录演示</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 技术架构 -->
+    <section class="hl-section">
+      <div class="container">
+        <div class="hl-section-head">
+          <h2 class="section-title">技术架构，简洁可上线</h2>
+          <p class="section-sub">纯前端 + Serverless，零服务器运维；本地优先、云端可选，数据按账号隔离。</p>
+        </div>
+        <div class="hl-chips">
+          <span class="hl-chip">☁️ <b>Cloudflare Pages</b> 静态托管 + Functions</span>
+          <span class="hl-chip">🗄️ <b>D1</b> 无服务器 SQLite</span>
+          <span class="hl-chip">🔐 <b>Web Crypto</b> 密码哈希 + JWT</span>
+          <span class="hl-chip">🤖 <b>通义千问</b> AI 对话</span>
+          <span class="hl-chip">👁️ <b>腾讯云 OCR</b> 小票识别</span>
+          <span class="hl-chip">🎯 <b>游客演示模式</b> 免登录只读</span>
+          <span class="hl-chip">🔒 <b>数据按账号隔离</b></span>
+          <span class="hl-chip">💾 <b>本地优先 + 云端同步</b></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 底部 CTA -->
+    <section class="hl-section alt">
+      <div class="container hl-section-head">
+        <h2 class="section-title">现在就来看看，钱到底去哪了</h2>
+        <p class="section-sub">无需注册，打开即是示例账本（只读）；想记录自己的，注册一个账号即可。</p>
+        <div class="hl-hero-actions" style="justify-content:center">
+          <a class="btn btn-primary btn-pulse" href="dashboard.html?tour=1">
+            🎬 一键路演
+          </a>
+          <a class="btn btn-ghost" href="dashboard.html">
+            🎯 免登录体验演示
+            <span class="btn-tag">只读</span>
+          </a>
+          <a class="btn btn-ghost" href="index.html">返回官网首页</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="footer" data-component="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="nav-logo" href="index.html" aria-label="SmartPig 智能记账 — 首页">
+            <img class="brand-logo" src="assets/smartpig-mark.png" alt="" aria-hidden="true" />
+            <span class="brand-stack">
+              <span class="brand-name">SmartPig</span>
+              <span class="brand-tag">SMART BOOKKEEPING</span>
+            </span>
+          </a>
+          <p class="footer-desc">SmartPig 是一款 AI 智能记账平台：选择类型与金额，秒级完成，让每一笔收支都心中有数。</p>
+        </div>
+        <nav class="footer-col" aria-label="产品">
+          <p class="footer-col-title">产品</p>
+          <ul>
+            <li><a href="highlight.html">一页看懂</a></li>
+            <li><a href="dashboard.html">免登录演示</a></li>
+            <li><a href="login.html#register">开始记账</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="功能">
+          <p class="footer-col-title">功能</p>
+          <ul>
+            <li><a href="dashboard.html">一笔入魂</a></li>
+            <li><a href="dashboard.html">钱去哪了</a></li>
+            <li><a href="dashboard.html">小目标</a></li>
+            <li><a href="dashboard.html">消费教练</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="支持">
+          <p class="footer-col-title">支持</p>
+          <ul>
+            <li><a href="index.html">官网首页</a></li>
+            <li><a href="login.html">登录</a></li>
+            <li><a href="#faq">常见问题</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 SmartPig · SMART BOOKKEEPING · 支持本地演示 / 云端账号（数据按账号隔离）</p>
+        <nav aria-label="站点导航">
+          <a href="index.html">首页</a>
+          <a href="highlight.html">一页看懂</a>
+          <a href="login.html">登录</a>
+        </nav>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/highlight.js"></script>
+</body>
+</html>

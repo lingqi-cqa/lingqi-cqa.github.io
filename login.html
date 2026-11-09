@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>登录 / 注册 — SmartPig 智能记账</title>
+  <meta name="description" content="登录或注册 SmartPig 智能记账（SMART BOOKKEEPING），开启智能记账与 AI 理财。" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png" />
+  <link rel="apple-touch-icon" href="assets/smartpig-mark-180.png" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/auth-piggy.css" />
+  <link rel="stylesheet" href="css/brand.css" />
+</head>
+<body>
+  <div class="auth-wrap">
+    <!-- 全页财富装饰层：元宝 / 钱袋 / 金币 / 红包（纯装饰，左右栏共享，不分层） -->
+    <div class="auth-deco" aria-hidden="true">
+      <!-- 常驻（始终可见，更明显） -->
+      <span class="deco-static" style="left:3%;  top:10%; font-size:54px">💰</span>
+      <span class="deco-static" style="left:93%; top:48%; font-size:50px">👛</span>
+      <span class="deco-static" style="left:47%; top:91%; font-size:46px">🪙</span>
+      <span class="deco-static" style="left:88%; top:78%; font-size:44px">🧧</span>
+      <span class="deco-static" style="left:6%;  top:62%; font-size:42px">💰</span>
+      <span class="deco-static" style="left:70%; top:8%;  font-size:40px">👛</span>
+      <!-- 漂浮 -->
+      <span style="left:20%; top:40%; font-size:28px; animation-duration:10s; animation-delay:0s">🪙</span>
+      <span style="left:80%; top:22%; font-size:30px; animation-duration:9s;  animation-delay:1.2s">💰</span>
+      <span style="left:64%; top:60%; font-size:30px; animation-duration:12s; animation-delay:.4s">🧧</span>
+      <span style="left:36%; top:14%; font-size:26px; animation-duration:11s; animation-delay:3s">👛</span>
+      <span style="left:92%; top:30%; font-size:24px; animation-duration:9.5s;animation-delay:2.6s">💎</span>
+      <span style="left:12%; top:30%; font-size:24px; animation-duration:13s; animation-delay:1.6s">✨</span>
+      <span style="left:55%; top:80%; font-size:26px; animation-duration:10.5s;animation-delay:.8s">🪙</span>
+      <span style="left:30%; top:50%; font-size:22px; animation-duration:12.5s;animation-delay:2.2s">⭐</span>
+      <span style="left:58%; top:40%; font-size:22px; animation-duration:11.5s;animation-delay:1.8s">💰</span>
+      <span style="left:84%; top:64%; font-size:24px; animation-duration:9.8s; animation-delay:3.2s">🪙</span>
+      <span style="left:24%; top:84%; font-size:22px; animation-duration:10.2s;animation-delay:2.4s">👛</span>
+      <span style="left:76%; top:90%; font-size:22px; animation-duration:11.2s;animation-delay:.6s">🧧</span>
+    </div>
+    <!-- 左侧品牌介绍 -->
+    <aside class="auth-aside">
+      <div>
+        <a class="brand" href="index.html" style="text-decoration:none">
+          <img class="brand-logo" src="assets/smartpig-mark.png" alt="" aria-hidden="true" />
+          <span class="brand-stack">
+            <span class="brand-name">SmartPig</span>
+            <span class="brand-tag">SMART BOOKKEEPING</span>
+          </span>
+        </a>
+      </div>
+      <!-- 互动小猪储蓄罐场景 -->
+      <div class="pig-scene" id="pigScene">
+        <p class="pig-kicker">和猪猪一起管钱</p>
+        <h2 class="pig-headline">把钱交给会害羞的小猪</h2>
+
+        <div class="pig-stage">
+          <!-- 存钱（左）：鼠标移上去小猪超开心 -->
+          <button type="button" class="pig-trigger trigger-save" id="triggerSave" aria-label="模拟存钱：小猪会兴奋">
+            <span class="trigger-emoji">💰</span>
+            <span class="trigger-label">存钱</span>
+            <span class="trigger-sub">小猪会超开心</span>
+          </button>
+
+          <!-- 小猪本体 -->
+          <div class="pig-wrap">
+            <div class="pig-bubble" id="pigBubble">戳戳我呀 👀</div>
+            <div class="pig-sweat">💦</div>
+            <div class="pig-float">
+              <svg class="pig" viewBox="0 0 240 220" role="img" aria-label="储蓄罐小猪">
+                <defs>
+                  <radialGradient id="pigBody" cx="40%" cy="26%" r="80%">
+                    <stop offset="0%" stop-color="#ffe3ed" />
+                    <stop offset="55%" stop-color="#ffb3cb" />
+                    <stop offset="100%" stop-color="#f389ab" />
+                  </radialGradient>
+                  <radialGradient id="pigSnout" cx="40%" cy="30%" r="85%">
+                    <stop offset="0%" stop-color="#ffc6da" />
+                    <stop offset="100%" stop-color="#ec7da1" />
+                  </radialGradient>
+                  <radialGradient id="pigEar" cx="40%" cy="30%" r="85%">
+                    <stop offset="0%" stop-color="#ffc6da" />
+                    <stop offset="100%" stop-color="#ec7da1" />
+                  </radialGradient>
+                  <radialGradient id="pigBelly" cx="50%" cy="35%" r="75%">
+                    <stop offset="0%" stop-color="#fff5f9" />
+                    <stop offset="100%" stop-color="#ffc8da" />
+                  </radialGradient>
+                  <linearGradient id="pigLeg" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#ffa6c0" />
+                    <stop offset="100%" stop-color="#ef89a8" />
+                  </linearGradient>
+                  <radialGradient id="pigGloss" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.75" />
+                    <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+                  </radialGradient>
+                  <filter id="pigGroundBlur" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur stdDeviation="4" />
+                  </filter>
+                </defs>
+
+                <!-- 地面投影（白底用淡灰粉） -->
+                <ellipse class="pig-ground" cx="120" cy="214" rx="76" ry="12" filter="url(#pigGroundBlur)" />
+
+                <!-- 耳朵（头顶两侧小三角） -->
+                <path class="pig-ear" d="M60 58 q-16 -28 4 -32 q22 -4 18 24 Z" />
+                <path class="pig-ear" d="M180 58 q16 -28 -4 -32 q-22 -4 -18 24 Z" />
+
+                <!-- 小身体（头部下方露出） -->
+                <ellipse class="pig-belly" cx="120" cy="190" rx="44" ry="30" />
+                <rect class="pig-leg" x="92" y="200" width="20" height="18" rx="8" />
+                <rect class="pig-leg" x="128" y="200" width="20" height="18" rx="8" />
+
+                <!-- 大头（占画面主体） -->
+                <circle class="pig-body" cx="120" cy="104" r="82" />
+
+                <!-- 球面高光（顶部柔光） -->
+                <ellipse cx="86" cy="64" rx="36" ry="24" fill="url(#pigGloss)" />
+
+                <!-- 英雄头带（原创元气小猪：借鉴"头带英雄"通用母题、用品牌珊瑚红，规避 IP 抄袭） -->
+                <path class="pig-band" d="M62 76 q58 -22 116 0 l0 17 q-58 -20 -116 0 Z" />
+                <path class="pig-band-tail" d="M64 74 l-18 -7 l5 20 Z" />
+                <path class="pig-band-tail" d="M176 74 l18 -7 l-5 20 Z" />
+                <circle class="pig-badge" cx="120" cy="78" r="14" />
+                <circle class="pig-badge-in" cx="120" cy="78" r="9" />
+                <path class="pig-badge-star" d="M120 71 l2.6 5.6 6 .7 -4.4 4.1 1.1 5.9 -5.3 -2.9 -5.3 2.9 1.1 -5.9 -4.4 -4.1 6 -.7 Z" />
+
+                <!-- 投币口（头顶储蓄罐开口） -->
+                <rect class="pig-slot" x="102" y="28" width="36" height="12" rx="6" />
+                <ellipse cx="120" cy="28" rx="18" ry="4" fill="#d95f82" opacity="0.45" />
+
+                <!-- 腮红 -->
+                <circle class="pig-blush" cx="72" cy="118" r="15" />
+                <circle class="pig-blush" cx="168" cy="118" r="15" />
+
+                <!-- 眼睛：闲置 + 跟随鼠标（白眼球 + 可动瞳孔 + 高光） -->
+                <g class="eye-follow">
+                  <circle class="eye-white" cx="90" cy="98" r="15" />
+                  <circle class="eye-white" cx="150" cy="98" r="15" />
+                  <g class="pupil-g">
+                    <circle class="pupil" cx="90" cy="98" r="8.5" />
+                    <circle class="glint" cx="86" cy="94" r="3" />
+                    <circle class="glint" cx="94" cy="103" r="1.8" />
+                  </g>
+                  <g class="pupil-g">
+                    <circle class="pupil" cx="150" cy="98" r="8.5" />
+                    <circle class="glint" cx="146" cy="94" r="3" />
+                    <circle class="glint" cx="154" cy="103" r="1.8" />
+                  </g>
+                </g>
+                <!-- 眼睛：开心（弯弯笑眼） -->
+                <g class="eye-happy">
+                  <path d="M76 102 q14 -20 28 0" />
+                  <path d="M136 102 q14 -20 28 0" />
+                </g>
+                <!-- 眼睛：惊吓（瞪大 + 瞳孔 + 眉毛） -->
+                <g class="eye-scared">
+                  <circle cx="90" cy="98" r="16" />
+                  <circle cx="150" cy="98" r="16" />
+                  <circle class="pupil" cx="92" cy="100" r="8" />
+                  <circle class="pupil" cx="152" cy="100" r="8" />
+                  <circle class="glint" cx="88" cy="94" r="3.4" />
+                  <circle class="glint" cx="148" cy="94" r="3.4" />
+                  <path class="brow" d="M72 76 q18 -13 36 0" />
+                  <path class="brow" d="M132 76 q18 -13 36 0" />
+                </g>
+
+                <!-- 猪鼻 -->
+                <ellipse class="pig-snout" cx="120" cy="128" rx="33" ry="25" />
+                <ellipse cx="105" cy="115" rx="12" ry="8" fill="url(#pigGloss)" />
+                <circle class="pig-nostril" cx="110" cy="128" r="5.5" />
+                <circle class="pig-nostril" cx="130" cy="128" r="5.5" />
+
+                <!-- 嘴：微笑 -->
+                <path class="mouth-smile" d="M101 158 q19 17 38 0" />
+                <!-- 嘴：撇嘴（惊吓） -->
+                <path class="mouth-frown" d="M101 168 q19 -17 38 0" />
+              </svg>
+            </div>
+            <div class="pig-coin">🪙</div>
+          </div>
+
+          <!-- 消费（右）：鼠标移上去小猪想逃跑 -->
+          <button type="button" class="pig-trigger trigger-spend" id="triggerSpend" aria-label="模拟消费：小猪会逃跑">
+            <span class="trigger-emoji">🛒</span>
+            <span class="trigger-label">消费</span>
+            <span class="trigger-sub">小猪会逃跑</span>
+          </button>
+        </div>
+
+        <p class="pig-tip">把鼠标移到「存钱」或「消费」上，看看小猪的反应～</p>
+      </div>
+
+      <div class="auth-quote" id="authQuote">演示环境：账号仅保存在本地浏览器（localStorage），不会上传服务器。</div>
+    </aside>
+
+    <!-- 右侧表单 -->
+    <main class="auth-main">
+      <div class="auth-card">
+        <h1 id="formTitle">欢迎回来 👋</h1>
+        <p class="sub" id="formSub">登录你的账户，继续管理财务</p>
+
+        <div class="tabs" role="tablist">
+          <button id="tabLogin" class="active" role="tab">登录</button>
+          <button id="tabRegister" role="tab">注册</button>
+        </div>
+
+        <div class="error-msg" id="errMsg"></div>
+        <div class="ok-msg" id="okMsg"></div>
+        <div class="hint" id="connHint" style="margin-bottom:12px"></div>
+
+        <form id="authForm" novalidate>
+          <div class="field" id="nameField" style="display:none">
+            <label for="name">昵称</label>
+            <input type="text" id="name" placeholder="怎么称呼你？" autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="email">邮箱</label>
+            <input type="email" id="email" placeholder="you@example.com" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="password">密码</label>
+            <input type="password" id="password" placeholder="至少 6 位" autocomplete="current-password" required />
+            <div class="hint" id="pwHint">演示用，请勿使用真实重要密码。</div>
+          </div>
+          <div class="form-foot" id="loginFoot">
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;color:var(--text-2)">
+              <input type="checkbox" id="remember" style="width:auto" /> 记住我
+            </label>
+            <a href="#" onclick="return false">忘记密码？</a>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" id="submitBtn">登录</button>
+        </form>
+
+        <p class="muted text-center" style="font-size:13px;margin-top:18px">
+          登录即表示同意 <a href="#" onclick="return false">服务条款</a> 与 <a href="#" onclick="return false">隐私政策</a>
+        </p>
+        <p class="text-center" style="margin-top:14px">
+          <a class="btn btn-ghost btn-sm" href="index.html">← 返回首页</a>
+        </p>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/api-base.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // 模式状态：login / register
+    let mode = 'login';
+
+    const tabLogin = document.getElementById('tabLogin');
+    const tabRegister = document.getElementById('tabRegister');
+    const formTitle = document.getElementById('formTitle');
+    const formSub = document.getElementById('formSub');
+    const nameField = document.getElementById('nameField');
+    const submitBtn = document.getElementById('submitBtn');
+    const loginFoot = document.getElementById('loginFoot');
+    const pwHint = document.getElementById('pwHint');
+    const errMsg = document.getElementById('errMsg');
+    const okMsg = document.getElementById('okMsg');
+    const authQuote = document.getElementById('authQuote');
+
+    // 云模式提示
+    if (window.CW_CONFIG && window.CW_CONFIG.SYNC_BACKEND) {
+      authQuote.textContent = '后端已接入：账号与数据由服务器数据库存储，按账号隔离；若后端未启动会自动用本地模式。';
+    }
+
+    /* 启动即探测后端：先把「连没连上」说清楚，避免提交后才看到 405 */
+    const connHint = document.getElementById('connHint');
+    (async () => {
+      if (!(window.CW_CONFIG && window.CW_CONFIG.SYNC_BACKEND) || !window.CWApiBase) {
+        connHint.textContent = '本地模式：账号仅保存在本机浏览器。';
+        return;
+      }
+      connHint.textContent = '正在连接后端服务…';
+      const b = await window.CWApiBase.resolve();
+      if (b === false) {
+        connHint.innerHTML = '⚠️ 未连接到后端服务（提交登录会返回 405）。<br>请先运行 <b>启动.bat</b>（或 <b>npm start</b>）再重新打开本页。';
+        connHint.style.color = '#e5484d';
+      } else {
+        const target = b || location.origin;
+        const fromFile = location.protocol === 'file:';
+        if (b && (fromFile || location.origin !== target)) {
+          // 找到了后端，但当前页不是从后端同源打开的 → 引导（并可直接点开）正确入口
+          const link = target + '/login.html';
+          connHint.innerHTML = '✅ 后端已连接：' + target + '<br>当前页面不是从后端打开的，请使用：'
+            + '<a href="' + link + '" style="font-weight:700;text-decoration:underline">' + link + '</a>';
+        } else {
+          connHint.textContent = '✅ 后端已连接：' + target + '　账号与账单存入服务器数据库，按账号隔离。';
+        }
+        connHint.style.color = '#0f9d76';
+      }
+    })();
+
+    // 支持从 index.html#register 直接进入注册
+    if (location.hash === '#register') setMode('register');
+
+    function setMode(m) {
+      mode = m;
+      const isReg = m === 'register';
+      tabLogin.classList.toggle('active', !isReg);
+      tabRegister.classList.toggle('active', isReg);
+      formTitle.textContent = isReg ? '创建你的账户 🚀' : '欢迎回来 👋';
+      formSub.textContent = isReg ? '注册后即可使用全部智能记账功能' : '登录你的账户，继续管理财务';
+      nameField.style.display = isReg ? 'block' : 'none';
+      submitBtn.textContent = isReg ? '注册并进入' : '登录';
+      loginFoot.style.display = isReg ? 'none' : 'flex';
+      pwHint.textContent = isReg ? '至少 6 位，请勿使用真实重要密码' : '请勿使用真实重要密码';
+      errMsg.textContent = ''; okMsg.textContent = '';
+    }
+    tabLogin.addEventListener('click', () => setMode('login'));
+    tabRegister.addEventListener('click', () => setMode('register'));
+
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const submitBtnEl = document.getElementById('submitBtn');
+
+    document.getElementById('authForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      errMsg.textContent = ''; okMsg.textContent = '';
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!emailRe.test(email)) { errMsg.textContent = '请输入有效的邮箱地址'; return; }
+      if (password.length < 6) { errMsg.textContent = '密码至少 6 位'; return; }
+      if (mode === 'register' && !name) { errMsg.textContent = '请填写昵称'; return; }
+
+      submitBtnEl.disabled = true;
+      try {
+        let user;
+        if (mode === 'register') {
+          user = await Auth.register(email, name, password);
+        } else {
+          user = await Auth.login(email, password);
+        }
+        if (user && user.offline) {
+          // 后端没启动时自动回落本地模式：不阻断使用，但要让用户知情
+          okMsg.textContent = '后端未连接，已用本地模式登录（数据保存在本机浏览器）';
+        } else {
+          okMsg.textContent = mode === 'register' ? '注册成功，正在进入…' : '登录成功，正在进入…';
+        }
+        // 标记「刚登录成功」，供 dashboard 弹出激励窗（仅首次，刷新不重复）
+        try { sessionStorage.setItem('cw_justLoggedIn', '1'); } catch (e) {}
+        setTimeout(() => { location.href = 'dashboard.html'; }, 700);
+      } catch (err) {
+        errMsg.textContent = err.message || '操作失败，请重试';
+        submitBtnEl.disabled = false;
+      }
+    });
+
+    /* —— 互动小猪：存钱→兴奋 / 消费→逃跑 —— */
+    (function () {
+      const pigScene = document.getElementById('pigScene');
+      const pigBubble = document.getElementById('pigBubble');
+      const triggerSave = document.getElementById('triggerSave');
+      const triggerSpend = document.getElementById('triggerSpend');
+      if (!pigScene || !triggerSave || !triggerSpend) return;
+
+      const BUBBLE = {
+        idle: '戳戳我呀 👀',
+        save: '好耶！钱又安全啦 💚',
+        spend: '别花！捂住钱包 🛡️'
+      };
+      let pigState = 'idle';
+
+      function setPig(state) {
+        if (state === pigState) return;
+        pigState = state;
+        pigScene.classList.remove('is-save', 'is-spend');
+        if (state === 'save') pigScene.classList.add('is-save');
+        if (state === 'spend') pigScene.classList.add('is-spend');
+        if (pigBubble) pigBubble.textContent = BUBBLE[state];
+      }
+
+      function bindTrigger(el, state) {
+        el.addEventListener('pointerenter', () => setPig(state));
+        el.addEventListener('pointerleave', () => setPig('idle'));
+        el.addEventListener('focus', () => setPig(state));
+        el.addEventListener('blur', () => setPig('idle'));
+        // 触摸 / 点击切换，避免移动端没有 hover 导致状态卡住
+        el.addEventListener('click', (e) => {
+          e.preventDefault();
+          setPig(pigState === state ? 'idle' : state);
+        });
+      }
+
+      bindTrigger(triggerSave, 'save');
+      bindTrigger(triggerSpend, 'spend');
+
+      /* 眼睛跟随鼠标：瞳孔朝光标方向偏移（闲置态生效） */
+      const pigWrap = pigScene.querySelector('.pig-wrap');
+      const pupilGs = pigScene.querySelectorAll('.eye-follow .pupil-g');
+      const EYE_MAX = 6; // 瞳孔最大偏移（SVG 单位）
+      let eyeRAF = 0, eyeTarget = { x: 0, y: 0 };
+
+      function updateEyes() {
+        eyeRAF = 0;
+        pupilGs.forEach(g => g.setAttribute('transform',
+          'translate(' + eyeTarget.x.toFixed(2) + ' ' + eyeTarget.y.toFixed(2) + ')'));
+      }
+      function onMove(e) {
+        if (pigState !== 'idle') return; // 兴奋/逃跑态隐藏跟随眼，无需计算
+        const r = pigWrap.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height * 0.45; // 以眼睛高度为中心
+        let dx = e.clientX - cx, dy = e.clientY - cy;
+        const d = Math.hypot(dx, dy) || 1;
+        eyeTarget.x = (dx / d) * EYE_MAX;
+        eyeTarget.y = (dy / d) * EYE_MAX;
+        if (!eyeRAF) eyeRAF = requestAnimationFrame(updateEyes);
+      }
+      function onLeave() {
+        eyeTarget.x = 0; eyeTarget.y = 0;
+        if (!eyeRAF) eyeRAF = requestAnimationFrame(updateEyes);
+      }
+      // 指针进入/离开存钱·消费时也把眼睛归位
+      function recenter() { onLeave(); }
+      document.addEventListener('mousemove', onMove, { passive: true });
+      document.addEventListener('mouseout', (e) => { if (!e.relatedTarget) onLeave(); });
+      window.addEventListener('blur', onLeave);
+      triggerSave.addEventListener('pointerenter', recenter);
+      triggerSpend.addEventListener('pointerenter', recenter);
+    })();
+  </script>
+</body>
+</html>

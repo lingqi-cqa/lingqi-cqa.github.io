@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>存钱罐动效 · SmartPig</title>
+<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/piggy-motion.css" />
+<style>
+  body {
+    min-height: 100vh;
+    display: grid; place-items: center;
+    padding: 28px 20px;
+    background:
+      radial-gradient(900px 520px at 18% 8%, #FFF1E4 0%, rgba(255, 241, 228, 0) 62%),
+      radial-gradient(760px 460px at 88% 92%, #FFE9E0 0%, rgba(255, 233, 224, 0) 60%),
+      #FBF7F2;
+  }
+  .demo {
+    width: min(560px, 100%);
+    background: #fff;
+    border: 1px solid #F1E2D3;
+    border-radius: 24px;
+    padding: 30px 28px 24px;
+    box-shadow: 0 24px 60px rgba(120, 86, 60, .12), 0 1px 0 rgba(255, 255, 255, .9) inset;
+    text-align: center;
+  }
+  .demo-brand {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; color: #A2735A;
+    background: #FFF7EF; border: 1px solid #F3E3D4;
+    padding: 5px 13px; border-radius: 999px; margin-bottom: 16px;
+  }
+  .demo-brand img { width: 20px; height: 20px; border-radius: 50%; }
+  .demo h1 { margin: 0 0 8px; font-size: 25px; letter-spacing: -.4px; color: #3A2A20; }
+  .demo p.lead { margin: 0 0 22px; font-size: 14px; color: #8A6A56; line-height: 1.7; }
+  .demo-stat {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+    margin-bottom: 20px;
+  }
+  .demo-stat div {
+    background: #FFF9F3; border: 1px solid #F5E6D8; border-radius: 14px;
+    padding: 12px 14px; text-align: left;
+  }
+  .demo-stat span { display: block; font-size: 11.5px; color: #B08E76; margin-bottom: 3px; }
+  .demo-stat b { font-size: 19px; color: #3A2A20; font-variant-numeric: tabular-nums; }
+  .demo-acts { display: flex; flex-direction: column; gap: 10px; }
+  .demo-acts button {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; padding: 14px 18px;
+    border-radius: 14px; border: 1px solid transparent;
+    font-family: inherit; font-size: 14.5px; font-weight: 600;
+    cursor: pointer; transition: transform .14s, box-shadow .18s, background .18s;
+  }
+  .demo-acts button .k { font-size: 12px; font-weight: 500; opacity: .7; }
+  .demo-acts button.in {
+    color: #fff;
+    background: linear-gradient(135deg, #E2543A, #F2A24F);
+    box-shadow: 0 10px 22px rgba(226, 84, 58, .22);
+  }
+  .demo-acts button.out {
+    color: #8A5544;
+    background: #FFF4EC;
+    border-color: #F0D6C4;
+    box-shadow: 0 6px 16px rgba(180, 120, 80, .08);
+  }
+  .demo-acts button:hover { transform: translateY(-1px); }
+  .demo-acts button:active { transform: translateY(0) scale(.99); }
+  .demo-foot { margin-top: 18px; font-size: 12px; color: #B69B86; line-height: 1.7; }
+  @media (max-width: 480px) {
+    .demo { padding: 24px 18px 18px; border-radius: 20px; }
+    .demo h1 { font-size: 21px; }
+    .demo-acts button { font-size: 13.5px; padding: 13px 15px; }
+  }
+</style>
+</head>
+<body>
+  <div class="demo">
+    <div class="demo-brand">
+      <img src="assets/smartpig-mark-128.png" alt="" /> SmartPig · 存钱罐动效
+    </div>
+    <h1>钱进钱出，罐子都知道</h1>
+    <p class="lead">存一笔，硬币会叮当落进罐子；花一笔，钱会从罐口被拿走。<br/>点下面的按钮试试手感。</p>
+
+    <div class="demo-stat">
+      <div><span>罐子里</span><b id="dSaved">¥4,500</b></div>
+      <div><span>本月预算还剩</span><b id="dLeft">¥2,586</b></div>
+    </div>
+
+    <div class="demo-acts">
+      <button class="in" type="button" data-act="in">
+        <span>存入 ¥200</span><span class="k">旅行基金 ✈️</span>
+      </button>
+      <button class="in" type="button" data-act="in-big">
+        <span>存入 ¥2,000</span><span class="k">年终奖到账</span>
+      </button>
+      <button class="out" type="button" data-act="out">
+        <span>花掉 ¥38</span><span class="k">餐饮 🍜</span>
+      </button>
+      <button class="out" type="button" data-act="out-big">
+        <span>花掉 ¥680</span><span class="k">购物 🛍️</span>
+      </button>
+    </div>
+
+    <div class="demo-foot">真实产品里，这两个动效分别挂在「储蓄目标 · 存入」和「记账 · 保存」上。</div>
+  </div>
+
+  <script src="js/piggy-motion.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    var S = { saved: 4500, target: 10000, budget: 3700, spent: 1114 };
+
+    var savedEl = document.getElementById('dSaved');
+    var leftEl = document.getElementById('dLeft');
+
+    function money(n) { return '¥' + Math.round(n).toLocaleString('zh-CN'); }
+    function render() {
+      savedEl.textContent = money(S.saved);
+      leftEl.textContent = money(Math.max(0, S.budget - S.spent));
+    }
+
+    function save(amount, label) {
+      var from = S.saved / S.target;
+      S.saved += amount;
+      var to = S.saved / S.target;
+      window.PiggyMotion.save({
+        amount: amount,
+        title: '存入 · ✈️ ' + label,
+        fillFrom: from,
+        fillTo: to,
+        progress: {
+          from: Math.min(100, from * 100),
+          to: Math.min(100, to * 100),
+          label: '目标进度',
+          sub: '还差 ' + money(Math.max(0, S.target - S.saved))
+        }
+      });
+      render();
+    }
+
+    function spend(amount, cat, emoji) {
+      var from = (S.budget - S.spent) / S.budget;
+      S.spent += amount;
+      var to = (S.budget - S.spent) / S.budget;
+      window.PiggyMotion.spend({
+        amount: amount,
+        title: '支出 · ' + emoji + ' ' + cat,
+        fillFrom: Math.max(0.06, from),
+        fillTo: Math.max(0.04, to),
+        progress: {
+          from: Math.max(0, from * 100),
+          to: Math.max(0, to * 100),
+          label: '本月预算剩余',
+          sub: '还剩 ' + money(Math.max(0, S.budget - S.spent))
+        }
+      });
+      render();
+    }
+
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-act]');
+      if (!b) return;
+      var act = b.dataset.act;
+      if (act === 'in') save(200, '旅行基金');
+      else if (act === 'in-big') save(2000, '旅行基金');
+      else if (act === 'out') spend(38, '餐饮', '🍜');
+      else if (act === 'out-big') spend(680, '购物', '🛍️');
+    });
+
+    render();
+    window.__demo = { state: S, render: render };
+  })();
+  </script>
+</body>
+</html>

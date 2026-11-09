@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartPig 智能记账 — 让每一笔钱都算得清</title>
+  <meta name="description" content="SmartPig（SMART BOOKKEEPING）是一款智能财务分析与记账平台，提供快速记账、记账管理、储蓄目标与 AI 理财建议，帮助你科学管钱、稳健增值。" />
+  <meta name="keywords" content="智能记账,财务分析,记账平台,储蓄目标,AI理财,个人理财,SmartPig" />
+  <meta name="author" content="SmartPig" />
+  <meta property="og:title" content="SmartPig 智能记账 — 让每一笔钱都算得清" />
+  <meta property="og:description" content="智能财务分析与记账平台：快速记账、记账管理、储蓄目标、AI理财一站式搞定。" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://smartpig.example.com/" />
+  <meta name="theme-color" content="#FFFFFF" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png" />
+  <link rel="apple-touch-icon" href="assets/smartpig-mark-180.png" />
+  <link rel="stylesheet" href="css/landing.css" />
+  <link rel="stylesheet" href="css/brand.css" />
+</head>
+<body>
+
+  <a class="skip-link" href="#main">跳到主要内容</a>
+
+  <!-- 顶部导航 -->
+  <header class="site-header">
+    <div class="container">
+      <a class="nav-logo" href="#top" aria-label="SmartPig 智能记账 — 首页">
+        <img class="brand-logo" src="assets/smartpig-mark.png" alt="" aria-hidden="true" />
+        <span class="brand-stack">
+          <span class="brand-name">SmartPig</span>
+          <span class="brand-tag">SMART BOOKKEEPING</span>
+        </span>
+      </a>
+      <nav class="nav-links" aria-label="主导航">
+        <a class="nav-link" href="highlight.html">一页看懂</a>
+        <a class="nav-link" href="dashboard.html"><span class="nav-ico">🏠</span>我的钱袋子</a>
+        <a class="nav-link" href="dashboard.html"><span class="nav-ico">⚡</span>一笔入魂</a>
+        <a class="nav-link" href="dashboard.html"><span class="nav-ico">📊</span>钱去哪了</a>
+        <a class="nav-link" href="dashboard.html"><span class="nav-ico">🎯</span>小目标</a>
+        <a class="nav-link" href="dashboard.html"><span class="nav-ico"><img class="ico-pig" src="assets/smartpig-mark-128.png" alt="" aria-hidden="true" /></span>消费教练</a>
+        <a class="nav-link" href="dashboard.html"><span class="nav-ico">🩺</span>财务免疫力</a>
+        <a class="nav-link" href="dashboard.html"><span class="nav-ico">🧊</span>冷静区</a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:12px">
+        <a class="nav-cta nav-cta-ghost nav-cta-desktop" href="dashboard.html">
+          <span aria-hidden="true">🎯</span> 演示
+        </a>
+        <a class="nav-cta nav-cta-desktop" href="login.html#register">
+          开始记账
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+        </a>
+        <button id="navBurger" type="button" class="nav-burger" aria-expanded="false" aria-controls="mobileMenu" aria-label="打开菜单">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+            <line class="burger-line burger-line-1" x1="1.5" y1="7.5" x2="18.5" y2="7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            <line class="burger-line burger-line-2" x1="1.5" y1="12.5" x2="18.5" y2="12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 移动端菜单 -->
+  <div id="mobileMenu" class="mobile-menu" hidden>
+    <nav aria-label="移动端导航">
+      <a class="mobile-link" href="dashboard.html"><span class="nav-ico">🏠</span>我的钱袋子</a>
+      <a class="mobile-link" href="dashboard.html"><span class="nav-ico">⚡</span>一笔入魂</a>
+      <a class="mobile-link" href="dashboard.html"><span class="nav-ico">📊</span>钱去哪了</a>
+      <a class="mobile-link" href="dashboard.html"><span class="nav-ico">🎯</span>小目标</a>
+      <a class="mobile-link" href="dashboard.html"><span class="nav-ico"><img class="ico-pig" src="assets/smartpig-mark-128.png" alt="" aria-hidden="true" /></span>消费教练</a>
+      <a class="mobile-link" href="dashboard.html"><span class="nav-ico">🩺</span>财务免疫力</a>
+      <a class="mobile-link" href="dashboard.html"><span class="nav-ico">🧊</span>冷静区</a>
+      <a class="mobile-link" href="highlight.html"><span class="nav-ico">📄</span>一页看懂</a>
+      <a class="mobile-link" href="dashboard.html"><span class="nav-ico">🎯</span>免登录体验演示</a>
+      <a class="nav-cta" href="login.html#register">
+        开始记账
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+      </a>
+    </nav>
+  </div>
+
+  <main id="main">
+
+    <!-- Hero -->
+    <section class="hero" id="top" data-component="hero">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-aurora hero-aurora-a"></div>
+        <div class="hero-aurora hero-aurora-b"></div>
+        <div class="hero-grid"></div>
+        <div class="hero-beams"></div>
+        <div class="hero-spotlight"></div>
+      </div>
+      <div class="hero-deco" aria-hidden="true">
+        <span class="hd hd1">💰</span>
+        <span class="hd hd2">🪙</span>
+        <span class="hd hd3">👛</span>
+        <span class="hd hd4">🧧</span>
+        <span class="hd hd5">✨</span>
+        <span class="hd hd6">💎</span>
+      </div>
+      <div class="container hero-inner">
+        <div class="hero-text">
+          <p class="hero-chip">
+            <span class="hero-chip-dot" aria-hidden="true">
+              <svg width="6" height="8" viewBox="0 0 6 8" fill="currentColor"><path d="M5.5 0 0 5.5h3L2 8l3.5-4.5H2.5L5.5 0z"/></svg>
+            </span>
+            AI 智能记账 — 让每一笔都心中有数
+          </p>
+          <h1 class="hero-title">
+            <span class="ht-line ht-l1">惊天内幕！</span>
+            <span class="ht-line">钱悄悄溜走的原因</span>
+            <span class="ht-line">终于找到了</span>
+            <span class="ht-sub">以为只是随手花钱？</span>
+            <span class="ht-line hero-emphasis">账单早已出卖了你</span>
+          </h1>
+          <div class="hero-foot">
+            <p class="hero-copy">
+              奶茶一杯 18、打车 32、深夜那单 199……单看都不心疼，加起来才知道钱去哪了。
+              SmartPig 把你的账单翻个底朝天，哪一类最会偷钱、哪几天最容易失控，一眼看清。
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="login.html#register">
+                开始快速记账
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+              </a>
+              <a class="btn btn-ghost" href="dashboard.html">
+                <span aria-hidden="true">🎯</span> 免登录体验演示
+                <span class="btn-tag">只读</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <svg class="hero-pig" viewBox="0 0 200 200" role="img" aria-label="储蓄罐小猪">
+            <defs>
+              <radialGradient id="heroBody" cx="40%" cy="26%" r="80%">
+                <stop offset="0%" stop-color="#ffe3ed" />
+                <stop offset="55%" stop-color="#ffb3cb" />
+                <stop offset="100%" stop-color="#f389ab" />
+              </radialGradient>
+            </defs>
+            <ellipse cx="100" cy="188" rx="66" ry="10" fill="#f3c3d4" opacity="0.5" />
+            <path d="M48 54 q-14 -24 4 -28 q18 -3 16 22 Z" fill="#f389ab" />
+            <path d="M152 54 q14 -24 -4 -28 q-18 -3 -16 22 Z" fill="#f389ab" />
+            <circle cx="100" cy="92" r="80" fill="url(#heroBody)" />
+            <ellipse cx="68" cy="56" rx="32" ry="20" fill="#ffffff" opacity="0.45" />
+            <path d="M48 66 q52 -20 104 0 l0 15 q-52 -18 -104 0 Z" fill="#ff6b81" />
+            <circle cx="100" cy="69" r="12" fill="#ffd34e" />
+            <path d="M100 63 l2.3 5 5 .6 -3.8 3.5 1 5.2 -4.5 -2.5 -4.5 2.5 1 -5.2 -3.8 -3.5 5 -.6 Z" fill="#b5305a" />
+            <rect x="84" y="24" width="32" height="11" rx="5.5" fill="#d95f82" />
+            <circle cx="56" cy="104" r="13" fill="#ff9bb3" opacity="0.8" />
+            <circle cx="144" cy="104" r="13" fill="#ff9bb3" opacity="0.8" />
+            <path d="M62 92 q14 -18 28 0" stroke="#4a2632" stroke-width="5" fill="none" stroke-linecap="round" />
+            <path d="M110 92 q14 -18 28 0" stroke="#4a2632" stroke-width="5" fill="none" stroke-linecap="round" />
+            <ellipse cx="100" cy="120" rx="30" ry="22" fill="#ff9bb3" />
+            <circle cx="88" cy="120" r="5" fill="#c2406e" />
+            <circle cx="112" cy="120" r="5" fill="#c2406e" />
+            <path d="M86 142 q14 13 28 0" stroke="#c2406e" stroke-width="4" fill="none" stroke-linecap="round" />
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- 分类滚动带 -->
+    <section class="marquee" data-component="trust-marquee">
+      <p class="marquee-eyebrow">你的每一笔收支，都有归属</p>
+      <div class="marquee-viewport">
+        <div class="marquee-track">
+          <div class="marquee-group">
+            <span class="marquee-item"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 1.5 10.8 7.2 16.5 9 10.8 10.8 9 16.5 7.2 10.8 1.5 9 7.2 7.2Z" fill="currentColor" stroke="none"/></svg>餐饮美食</span>
+            <span class="marquee-item"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2.5 16 15.5H2Z"/></svg>交通出行</span>
+            <span class="marquee-item"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2 16 9 9 16 2 9Z"/><path d="M9 2l7 7-7 7Z" fill="currentColor" stroke="none"/></svg>购物消费</span>
+            <span class="marquee-item"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.8" cy="9" r="3.4"/><circle cx="12.2" cy="9" r="3.4"/></svg>工资收入</span>
+            <span class="marquee-item"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2.5 14.7 5.8v6.4L9 15.5 3.3 12.2V5.8Z"/><circle cx="9" cy="9" r="1.6" fill="currentColor" stroke="none"/></svg>兼职收入</span>
+            <span class="marquee-item"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="9" r="6.2"/></svg>小目标</span>
+            <span class="marquee-item"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 15.5h13V2.5Z" fill="currentColor" stroke="none"/></svg>消费教练</span>
+            <span class="marquee-item"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 10c1.5-4 3.5-4 5 0s3.5 4 5 0 3.5-4 5 0"/></svg>财务免疫力</span>
+          </div>
+          <div class="marquee-group" aria-hidden="true">
+            <span class="marquee-item"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 1.5 10.8 7.2 16.5 9 10.8 10.8 9 16.5 7.2 10.8 1.5 9 7.2 7.2Z" fill="currentColor" stroke="none"/></svg>餐饮美食</span>
+            <span class="marquee-item"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2.5 16 15.5H2Z"/></svg>交通出行</span>
+            <span class="marquee-item"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2 16 9 9 16 2 9Z"/><path d="M9 2l7 7-7 7Z" fill="currentColor" stroke="none"/></svg>购物消费</span>
+            <span class="marquee-item"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.8" cy="9" r="3.4"/><circle cx="12.2" cy="9" r="3.4"/></svg>工资收入</span>
+            <span class="marquee-item"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 2.5 14.7 5.8v6.4L9 15.5 3.3 12.2V5.8Z"/><circle cx="9" cy="9" r="1.6" fill="currentColor" stroke="none"/></svg>兼职收入</span>
+            <span class="marquee-item"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="9" r="6.2"/></svg>小目标</span>
+            <span class="marquee-item"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 15.5h13V2.5Z" fill="currentColor" stroke="none"/></svg>消费教练</span>
+            <span class="marquee-item"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 10c1.5-4 3.5-4 5 0s3.5 4 5 0 3.5-4 5 0"/></svg>财务免疫力</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 本月概览 + 数据 -->
+    <section class="help" id="help" data-component="how-we-help">
+      <div class="container">
+        <div class="help-grid">
+          <h2 class="section-title help-title">本月概览</h2>
+          <div class="help-copy reveal">
+            <p>
+              本月结余 ¥11,052.00，收支为正。本月收入 ¥12,800.00（累计 2 笔），本月支出
+              ¥1,748.00（累计 6 笔）——结余、收入、支出，全部一眼看清。
+            </p>
+            <p>
+              选择类型与金额，秒级完成。和朋友聚餐、打车、衣服、周末兼职，每一笔都会自动进入
+              最近记录，随时可以查看全部。
+            </p>
+            <a class="learn-more" href="login.html#register">
+              查看全部
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="stats">
+          <div class="reveal">
+            <p class="stat-label">本月结余</p>
+            <p class="stat-number stat-positive">¥11,052.00</p>
+            <p class="stat-caption">▲ 收支为正</p>
+          </div>
+          <div class="reveal" style="transition-delay:60ms">
+            <p class="stat-label">本月收入</p>
+            <p class="stat-number stat-positive">¥12,800.00</p>
+            <p class="stat-caption">累计 2 笔</p>
+          </div>
+          <div class="reveal" style="transition-delay:120ms">
+            <p class="stat-label">本月支出</p>
+            <p class="stat-number stat-negative">¥1,748.00</p>
+            <p class="stat-caption">累计 6 笔</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 四大核心功能 -->
+    <section class="agents" id="agents" data-component="agent-cards">
+      <div class="agents-beam" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 class="section-title">四大核心功能</h2>
+          <p class="section-sub">登录进来就能用——每一项功能，都让你的收支更省心。</p>
+        </div>
+        <div class="agent-grid">
+          <article class="bot-card reveal">
+            <div class="bot-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+            </div>
+            <h3 class="bot-title">一笔入魂</h3>
+            <p class="bot-desc">选类型、填金额，秒级完成一笔记录。支出、收入一键切换，常用分类智能推荐，记账像呼吸一样自然。</p>
+          </article>
+          <article class="bot-card reveal" style="transition-delay:60ms">
+            <div class="bot-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+            </div>
+            <h3 class="bot-title">钱去哪了</h3>
+            <p class="bot-desc">明细、消费排行、跨月对比一目了然；分类预算超支自动预警，每一笔都清清楚楚。</p>
+          </article>
+          <article class="bot-card reveal" style="transition-delay:120ms">
+            <div class="bot-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+            </div>
+            <h3 class="bot-title">小目标</h3>
+            <p class="bot-desc">定一个小目标，看结余一点点变多。AI 按你的月结余预测达成时间，并给出调整建议。</p>
+          </article>
+          <article class="bot-card reveal" style="transition-delay:180ms">
+            <div class="bot-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4"/><circle cx="12" cy="3" r="1.6"/><circle cx="9" cy="13" r="1.3"/><circle cx="15" cy="13" r="1.3"/><path d="M9.5 16h5"/></svg>
+            </div>
+            <h3 class="bot-title">消费教练</h3>
+            <p class="bot-desc">通义千问实时对话、无限问答：消费风险识别、财务预测建模、自动报告与自适应预算，一个人可用的私人财务教练。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 常用分类 -->
+    <section class="industries" id="industries" data-component="industries">
+      <div class="industry-wash industry-wash-a" aria-hidden="true"></div>
+      <div class="industry-wash industry-wash-b" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-head reveal">
+          <h2 class="section-title">常用分类<br />全覆盖</h2>
+          <p class="section-sub">从餐饮美食到工资收入，从和朋友聚餐到周末兼职——每一笔都有归属。</p>
+        </div>
+        <div class="reveal">
+          <div class="industry-list">
+            <a class="industry-row" href="login.html#register"><span class="industry-name">餐饮美食</span></a>
+            <a class="industry-row" href="login.html#register"><span class="industry-name">交通出行</span></a>
+            <a class="industry-row" href="login.html#register"><span class="industry-name">购物消费</span></a>
+            <a class="industry-row" href="login.html#register"><span class="industry-name">工资收入</span></a>
+            <a class="industry-row" href="login.html#register"><span class="industry-name">兼职收入</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 常见问题 -->
+    <section class="faq" id="faq" data-component="faq">
+      <div class="container">
+        <div class="faq-grid">
+          <div class="faq-intro reveal">
+            <h2 class="section-title">常见问题</h2>
+            <p class="faq-help">
+              开始记账前，大家最常问的五个问题。没看到你的问题？直接
+              <a href="login.html">联系我们</a>——一天内回复。
+            </p>
+          </div>
+          <div class="reveal">
+            <div class="faq-list">
+              <div class="faq-item is-open">
+                <h3 style="margin:0">
+                  <button type="button" id="faq-trigger-0" class="faq-trigger" aria-expanded="true" aria-controls="faq-panel-0">
+                    SmartPig 是什么？
+                    <span class="faq-icon" aria-hidden="true">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    </span>
+                  </button>
+                </h3>
+                <div id="faq-panel-0" class="faq-answer" role="region" aria-labelledby="faq-trigger-0">
+                  <p class="faq-answer-inner">SmartPig 是一款 AI 智能记账平台。选择类型与金额，秒级完成；收入、支出、结余自动汇总，最近记录随时可查。</p>
+                </div>
+              </div>
+              <div class="faq-item">
+                <h3 style="margin:0">
+                  <button type="button" id="faq-trigger-1" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-1">
+                    快速记账怎么操作？
+                    <span class="faq-icon" aria-hidden="true">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    </span>
+                  </button>
+                </h3>
+                <div id="faq-panel-1" class="faq-answer" role="region" aria-labelledby="faq-trigger-1" aria-hidden="true">
+                  <p class="faq-answer-inner">打开「快速记一笔」，选择支出或收入，输入金额，确认分类（比如餐饮美食、交通出行），点击「保存这笔」，这条记录就会立刻出现在最近记录里。</p>
+                </div>
+              </div>
+              <div class="faq-item">
+                <h3 style="margin:0">
+                  <button type="button" id="faq-trigger-2" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-2">
+                    结余、收入、支出是怎么算的？
+                    <span class="faq-icon" aria-hidden="true">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    </span>
+                  </button>
+                </h3>
+                <div id="faq-panel-2" class="faq-answer" role="region" aria-labelledby="faq-trigger-2" aria-hidden="true">
+                  <p class="faq-answer-inner">本月结余 = 本月收入 − 本月支出。以本月为例：收入 ¥12,800.00（累计 2 笔），支出 ¥1,748.00（累计 6 笔），结余 ¥11,052.00，收支为正。</p>
+                </div>
+              </div>
+              <div class="faq-item">
+                <h3 style="margin:0">
+                  <button type="button" id="faq-trigger-3" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-3">
+                    记账数据是安全的吗？
+                    <span class="faq-icon" aria-hidden="true">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    </span>
+                  </button>
+                </h3>
+                <div id="faq-panel-3" class="faq-answer" role="region" aria-labelledby="faq-trigger-3" aria-hidden="true">
+                  <p class="faq-answer-inner">你的账目只属于你。查看全部记录、退出登录都由你掌控，任何一笔操作都可以随时在概览里核对。</p>
+                </div>
+              </div>
+              <div class="faq-item">
+                <h3 style="margin:0">
+                  <button type="button" id="faq-trigger-4" class="faq-trigger" aria-expanded="false" aria-controls="faq-panel-4">
+                    小目标、消费教练 和 财务免疫力 有什么区别？
+                    <span class="faq-icon" aria-hidden="true">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    </span>
+                  </button>
+                </h3>
+                <div id="faq-panel-4" class="faq-answer" role="region" aria-labelledby="faq-trigger-4" aria-hidden="true">
+                  <p class="faq-answer-inner">储蓄目标帮你把结余存到目标金额；AI理财提供通义千问实时问答、资产配置、财务预测、风险识别、自动报告与预算调节；健康分则给整体财务状况打个分，让你心里有数。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 底部 CTA -->
+    <section class="conversion" id="contact" data-component="conversion">
+      <div class="container">
+        <div class="cta-card reveal">
+          <div class="cta-glow" aria-hidden="true"></div>
+          <div class="cta-deco" aria-hidden="true">
+            <span class="cd cd1">💰</span>
+            <span class="cd cd2">🪙</span>
+            <span class="cd cd3">👛</span>
+            <span class="cd cd4">🧧</span>
+            <span class="cd cd5">✨</span>
+            <span class="cd cd6">💎</span>
+          </div>
+          <div class="cta-pig" aria-hidden="true">
+            <svg viewBox="0 0 200 200" role="img" aria-label="储蓄罐小猪">
+              <defs>
+                <radialGradient id="ctaBody" cx="40%" cy="26%" r="80%">
+                  <stop offset="0%" stop-color="#ffe3ed" />
+                  <stop offset="55%" stop-color="#ffb3cb" />
+                  <stop offset="100%" stop-color="#f389ab" />
+                </radialGradient>
+              </defs>
+              <ellipse cx="100" cy="188" rx="66" ry="9" fill="#f3c3d4" opacity="0.5" />
+              <path d="M48 54 q-14 -24 4 -28 q18 -3 16 22 Z" fill="#f389ab" />
+              <path d="M152 54 q14 -24 -4 -28 q-18 -3 -16 22 Z" fill="#f389ab" />
+              <circle cx="100" cy="92" r="80" fill="url(#ctaBody)" />
+              <ellipse cx="68" cy="56" rx="32" ry="20" fill="#ffffff" opacity="0.45" />
+              <path d="M48 66 q52 -20 104 0 l0 15 q-52 -18 -104 0 Z" fill="#ff6b81" />
+              <circle cx="100" cy="69" r="12" fill="#ffd34e" />
+              <path d="M100 63 l2.3 5 5 .6 -3.8 3.5 1 5.2 -4.5 -2.5 -4.5 2.5 1 -5.2 -3.8 -3.5 5 -.6 Z" fill="#b5305a" />
+              <rect x="84" y="24" width="32" height="11" rx="5.5" fill="#d95f82" />
+              <circle cx="56" cy="104" r="13" fill="#ff9bb3" opacity="0.8" />
+              <circle cx="144" cy="104" r="13" fill="#ff9bb3" opacity="0.8" />
+              <path d="M62 92 q14 -18 28 0" stroke="#4a2632" stroke-width="5" fill="none" stroke-linecap="round" />
+              <path d="M110 92 q14 -18 28 0" stroke="#4a2632" stroke-width="5" fill="none" stroke-linecap="round" />
+              <ellipse cx="100" cy="120" rx="30" ry="22" fill="#ff9bb3" />
+              <circle cx="88" cy="120" r="5" fill="#c2406e" />
+              <circle cx="112" cy="120" r="5" fill="#c2406e" />
+              <path d="M86 142 q14 13 28 0" stroke="#c2406e" stroke-width="4" fill="none" stroke-linecap="round" />
+            </svg>
+          </div>
+          <div class="cta-content">
+            <h2 class="cta-title">今天就开始，<span class="cta-serif">秒级记账</span></h2>
+            <div class="cta-actions">
+              <a class="btn cta-btn" href="login.html#register">
+                立即开始记账
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
+              </a>
+              <a class="btn btn-ghost" href="dashboard.html">
+                <span aria-hidden="true">🎯</span> 免登录体验演示
+                <span class="btn-tag">只读</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="footer" data-component="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="nav-logo" href="#top" aria-label="SmartPig 智能记账 — 首页">
+            <img class="brand-logo" src="assets/smartpig-mark.png" alt="" aria-hidden="true" />
+            <span class="brand-stack">
+              <span class="brand-name">SmartPig</span>
+              <span class="brand-tag">SMART BOOKKEEPING</span>
+            </span>
+          </a>
+          <p class="footer-desc">
+            SmartPig（SMART BOOKKEEPING）是一款 AI 智能记账平台：选择类型与金额，秒级完成，让每一笔收支都心中有数。
+          </p>
+          <div class="footer-social">
+            <a class="social" href="#" aria-label="X">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.6 3h2.9l-6.4 7.3L21.7 21h-5.9l-4.6-6-5.3 6H3l6.8-7.8L2.6 3h6l4.1 5.5L17.6 3z" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a class="social" href="#" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+            <a class="social" href="#" aria-label="YouTube">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg>
+            </a>
+            <a class="social" href="#" aria-label="GitHub">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+            </a>
+          </div>
+        </div>
+        <nav class="footer-col" aria-label="产品">
+          <p class="footer-col-title">产品</p>
+          <ul>
+            <li><a href="highlight.html">一页看懂</a></li>
+            <li><a href="dashboard.html">一笔入魂</a></li>
+            <li><a href="dashboard.html">钱去哪了</a></li>
+            <li><a href="dashboard.html">小目标</a></li>
+            <li><a href="dashboard.html">消费教练</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="功能">
+          <p class="footer-col-title">功能</p>
+          <ul>
+            <li><a href="dashboard.html">我的钱袋子</a></li>
+            <li><a href="dashboard.html">最近记录</a></li>
+            <li><a href="dashboard.html">财务免疫力</a></li>
+            <li><a href="dashboard.html">冷静区</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="支持">
+          <p class="footer-col-title">支持</p>
+          <ul>
+            <li><a href="#">帮助中心</a></li>
+            <li><a href="#">使用教程</a></li>
+            <li><a href="login.html">联系我们</a></li>
+            <li><a href="#faq">常见问题</a></li>
+          </ul>
+        </nav>
+        <nav class="footer-col" aria-label="法律">
+          <p class="footer-col-title">法律</p>
+          <ul>
+            <li><a href="#">隐私政策</a></li>
+            <li><a href="#">服务条款</a></li>
+            <li><a href="#">Cookie 政策</a></li>
+            <li><a href="#">用户协议</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 SmartPig · SMART BOOKKEEPING · 支持本地演示 / 云端账号（数据按账号隔离）</p>
+        <nav aria-label="站点导航">
+          <a href="index.html">首页</a>
+          <a href="highlight.html">一页看懂</a>
+          <a href="login.html">登录</a>
+        </nav>
+      </div>
+    </div>
+    <div class="footer-watermark-wrap" aria-hidden="true">
+      <span class="footer-watermark">SmartPig</span>
+    </div>
+  </footer>
+
+  <script src="js/landing.js"></script>
+</body>
+</html>

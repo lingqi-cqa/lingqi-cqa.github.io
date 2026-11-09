@@ -1,0 +1,411 @@
+/* =========================================================
+   SmartPig 存钱罐动效窗（Piggy Motion）
+   · 存入：硬币抛入罐口 → 罐子被砸得一沉 → 罐内金币长高 → 进度前进
+   · 消费：罐子一惊 → 金币从罐口被甩出 → 罐子瘪下去 → 进度回退
+   全屏居中小窗，2.2~2.6s 自动收起，点击任意处可立即关闭
+   ========================================================= */
+
+.pm-mask{
+  position: fixed; inset: 0; z-index: 300;
+  display: grid; place-items: center; padding: 20px;
+  background: rgba(34, 24, 18, .42);
+  -webkit-backdrop-filter: blur(7px) saturate(.92);
+  backdrop-filter: blur(7px) saturate(.92);
+  animation: pmFade .18s ease both;
+  font-family: var(--font, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif);
+  -webkit-tap-highlight-color: transparent;
+}
+.pm-mask.is-out{ animation: pmFadeOut .24s ease forwards; }
+@keyframes pmFade{ from{opacity:0} to{opacity:1} }
+@keyframes pmFadeOut{ from{opacity:1} to{opacity:0} }
+
+/* ---------- 小窗 ---------- */
+.pm-panel{
+  position: relative;
+  width: min(392px, 100%);
+  padding: 20px 20px 14px;
+  border-radius: 26px;
+  text-align: center;
+  color: #3A2A20;
+  background: linear-gradient(180deg, #FFFDFA 0%, #FFF7EF 58%, #FFF0E4 100%);
+  border: 1px solid rgba(228, 186, 150, .6);
+  box-shadow:
+    0 30px 70px rgba(70, 44, 26, .3),
+    0 1px 0 rgba(255, 255, 255, .95) inset;
+}
+.pm-panel.is-in{ animation: pmUp .32s cubic-bezier(.2, .9, .3, 1.05) both; }
+@keyframes pmUp{
+  from{ opacity: 0; transform: translateY(18px) scale(.96); }
+  to{ opacity: 1; transform: none; }
+}
+.pm-panel[data-mode="out"]{ background: linear-gradient(180deg, #FFFCFA 0%, #FDF6F1 58%, #F9EDE5 100%); }
+
+/* 顶部小胶囊（压在飞币之上，硬币从卡片外落下时会从它后面穿过） */
+.pm-eyebrow{
+  position: relative; z-index: 3;
+  display: inline-flex; align-items: center; gap: 7px;
+  max-width: 100%;
+  padding: 5px 13px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid #F1DDC9;
+  font-size: 12px; line-height: 1.5; color: #9A6A4E;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  box-shadow: 0 2px 6px rgba(150, 100, 70, .06);
+}
+.pm-eyebrow .pm-dot{
+  width: 7px; height: 7px; border-radius: 50%; flex: 0 0 auto;
+  background: linear-gradient(135deg, #F2A24F, #D8482F);
+  box-shadow: 0 0 0 3px rgba(242, 162, 79, .16);
+}
+.pm-panel[data-mode="out"] .pm-eyebrow .pm-dot{ background: linear-gradient(135deg, #C79E86, #9C7059); box-shadow: 0 0 0 3px rgba(156, 112, 89, .12); }
+
+/* 关闭 × */
+.pm-x{
+  position: absolute; top: 12px; right: 12px; z-index: 4;
+  width: 30px; height: 30px; border-radius: 10px;
+  border: none; cursor: pointer;
+  background: rgba(255, 255, 255, .72);
+  color: #A9836C; font-size: 17px; line-height: 1;
+  display: grid; place-items: center;
+  transition: background .15s, transform .15s, color .15s;
+}
+.pm-x:hover{ background: #fff; color: #7A5A46; transform: rotate(90deg); }
+
+/* ---------- 舞台 ---------- */
+.pm-stage{
+  position: relative; z-index: 1;
+  height: 268px;
+  margin: 4px 0 0;
+  display: grid; place-items: center;
+}
+
+/* ---------- 存钱罐本体 ---------- */
+.pm-jar{
+  position: relative;
+  width: 216px; height: 236px;
+  transform-origin: 50% 92%;
+  will-change: transform;
+}
+/* 耳朵 */
+.pm-ear{
+  position: absolute; top: 2px;
+  width: 54px; height: 56px;
+  background: linear-gradient(168deg, #FBD3C0 0%, #F4B29B 58%, #EDA189 100%);
+  box-shadow: inset 0 -3px 7px rgba(205, 122, 98, .26), inset 0 2px 0 rgba(255, 255, 255, .35);
+  z-index: 0;
+}
+.pm-ear.l{ left: -1px; border-radius: 78% 22% 26% 74% / 92% 60% 40% 8%; transform: rotate(-27deg); }
+.pm-ear.r{ right: -1px; border-radius: 22% 78% 74% 26% / 60% 92% 8% 40%; transform: rotate(27deg); }
+.pm-ear::after{
+  content: ''; position: absolute; inset: 9px 13px 11px 13px;
+  border-radius: inherit;
+  background: linear-gradient(175deg, rgba(222, 126, 106, .42), rgba(222, 126, 106, .12));
+}
+
+/* 罐口 + 投币口 */
+.pm-cap{
+  position: absolute; left: 50%; top: 4px;
+  width: 106px; height: 30px; margin-left: -53px;
+  border-radius: 12px 12px 9px 9px;
+  background: linear-gradient(180deg, #FFFBF6 0%, #F8E3D2 62%, #F0CDB5 100%);
+  border: 1.5px solid rgba(226, 180, 146, .9);
+  box-shadow: inset 0 -3px 7px rgba(206, 150, 112, .22), 0 3px 6px rgba(170, 115, 78, .1);
+  z-index: 3;
+}
+.pm-slot{
+  position: absolute; left: 50%; top: 13px;
+  width: 50px; height: 11px; margin-left: -25px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #5C3E2E, #7A5540);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 255, 255, .5);
+  z-index: 4;
+}
+
+/* 玻璃罐身 */
+.pm-body{
+  position: absolute; left: 10px; right: 10px; top: 30px; bottom: 32px;
+  border-radius: 52% 52% 30% 30% / 42% 42% 16% 16%;
+  background:
+    linear-gradient(158deg,
+      rgba(255, 255, 255, .98) 0%,
+      rgba(255, 248, 241, .93) 36%,
+      rgba(255, 236, 223, .86) 70%,
+      rgba(250, 220, 204, .84) 100%);
+  border: 1.5px solid rgba(230, 190, 158, .78);
+  box-shadow:
+    inset 0 9px 16px rgba(255, 255, 255, .95),
+    inset 0 -12px 20px rgba(226, 168, 132, .22),
+    0 14px 26px rgba(180, 120, 80, .16);
+  overflow: hidden;
+  z-index: 2;
+}
+
+/* 罐内金币 */
+.pm-coins{ position: absolute; inset: 0; }
+.pm-coin{
+  position: absolute;
+  left: var(--x); bottom: var(--y);
+  width: 26px; height: 26px;
+  margin-left: -13px;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translateY(10px) scale(.25);
+  transition: opacity .26s ease, transform .3s cubic-bezier(.34, 1.5, .64, 1);
+  background: radial-gradient(circle at 34% 26%, #FFF7D2 0%, #FBD75A 38%, #EFB01F 70%, #C98A08 100%);
+  box-shadow:
+    inset 0 -2px 4px rgba(140, 88, 0, .42),
+    inset 0 2px 3px rgba(255, 255, 255, .8),
+    0 2px 5px rgba(160, 110, 40, .22);
+  will-change: transform, opacity;
+}
+.pm-coin::after{
+  content: '¥';
+  position: absolute; inset: 0;
+  display: grid; place-items: center;
+  font-size: 12px; font-weight: 800; font-style: normal;
+  color: #A9700A; opacity: .55;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .6);
+}
+.pm-coin.on{ opacity: 1; transform: translateY(0) scale(1); }
+.pm-coins.no-anim .pm-coin{ transition: none; }
+.pm-coin.drop{ animation: pmCoinDrop .42s cubic-bezier(.3, 1.4, .5, 1) both; }
+@keyframes pmCoinDrop{
+  0%{ opacity: 0; transform: translateY(-18px) scale(.35); }
+  58%{ opacity: 1; transform: translateY(2px) scale(1.16); }
+  100%{ opacity: 1; transform: translateY(0) scale(1); }
+}
+.pm-coin.eject{ animation: pmCoinEject .36s cubic-bezier(.3, .1, .6, 1) both; }
+@keyframes pmCoinEject{
+  0%{ opacity: 1; transform: translateY(0) scale(1); }
+  100%{ opacity: 0; transform: translateY(-34px) rotate(26deg) scale(.55); }
+}
+
+/* 玻璃高光 */
+.pm-sheen{
+  position: absolute; left: 20px; top: 20px;
+  width: 32px; height: 92px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, .95), rgba(255, 255, 255, 0));
+  transform: rotate(-11deg);
+  filter: blur(.6px);
+  pointer-events: none;
+}
+.pm-sheen.b{
+  left: auto; right: 18px; top: 62px;
+  width: 14px; height: 54px;
+  opacity: .55;
+  transform: rotate(9deg);
+  background: linear-gradient(180deg, rgba(255, 255, 255, .8), rgba(255, 255, 255, 0));
+}
+
+/* 猪脸 */
+.pm-face{ position: absolute; left: 0; right: 0; top: 37%; }
+.pm-eye{
+  position: absolute; top: 0;
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #4A3128;
+  transition: width .16s, height .16s, background .16s, border-radius .16s;
+}
+.pm-eye.l{ left: 66px; }
+.pm-eye.r{ right: 66px; }
+.pm-snout{
+  position: absolute; left: 50%; top: 11px;
+  width: 42px; height: 26px; margin-left: -21px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #FAC3AD 0%, #F1A48A 100%);
+  box-shadow: inset 0 -2px 4px rgba(190, 110, 86, .3), 0 1px 0 rgba(255, 255, 255, .5);
+}
+.pm-snout b{
+  position: absolute; top: 9px;
+  width: 7px; height: 10px; border-radius: 50%;
+  background: #A86450; opacity: .8;
+}
+.pm-snout b:nth-child(1){ left: 10px; }
+.pm-snout b:nth-child(2){ right: 10px; }
+.pm-cheek{
+  position: absolute; top: 16px;
+  width: 20px; height: 12px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(246, 140, 124, .8), rgba(246, 140, 124, 0) 72%);
+  opacity: .6;
+}
+.pm-cheek.l{ left: 48px; }
+.pm-cheek.r{ right: 48px; }
+
+/* 腿 + 影子 */
+.pm-leg{
+  position: absolute; bottom: 11px;
+  width: 38px; height: 30px;
+  border-radius: 0 0 14px 14px;
+  background: linear-gradient(180deg, #F6B49C, #E89375);
+  border: 1.5px solid rgba(216, 136, 110, .6);
+  border-top: none;
+  z-index: 1;
+  box-shadow: inset 0 -4px 6px rgba(190, 110, 86, .22);
+}
+.pm-leg.l{ left: 36px; }
+.pm-leg.r{ right: 36px; }
+
+.pm-shadow{
+  position: absolute; left: 50%; bottom: 2px;
+  width: 168px; height: 20px; margin-left: -84px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(150, 100, 70, .3), rgba(150, 100, 70, 0) 72%);
+  animation: pmShadowBreathe 3.2s ease-in-out infinite;
+}
+@keyframes pmShadowBreathe{ 0%,100%{ transform: scaleX(1); opacity: .9 } 50%{ transform: scaleX(.92); opacity: .72 } }
+
+/* ---------- 罐子动作 ---------- */
+.pm-jar.gulp{ animation: pmGulp .44s cubic-bezier(.3, .8, .4, 1) both; }
+@keyframes pmGulp{
+  0%{ transform: none; }
+  26%{ transform: scale(1.055, .925) translateY(5px); }
+  58%{ transform: scale(.972, 1.05) translateY(-4px); }
+  80%{ transform: scale(1.012, .99); }
+  100%{ transform: none; }
+}
+.pm-jar.shock{ animation: pmShock .52s ease-in-out both; }
+@keyframes pmShock{
+  0%, 100%{ transform: none; }
+  14%{ transform: translateX(-5px) rotate(-1.4deg); }
+  30%{ transform: translateX(5px) rotate(1.4deg); }
+  46%{ transform: translateX(-4px) rotate(-1deg); }
+  64%{ transform: translateX(3px) rotate(.8deg); }
+  82%{ transform: translateX(-1.5px) rotate(-.3deg); }
+}
+.pm-jar.deflate{ animation: pmDeflate .5s cubic-bezier(.3, .9, .4, 1) both; }
+@keyframes pmDeflate{
+  0%{ transform: none; }
+  38%{ transform: scale(.965, .885) translateY(7px); }
+  100%{ transform: none; }
+}
+
+/* 眼睛：受惊变大 */
+.pm-face.is-shock .pm-eye{
+  width: 13px; height: 13px; border-radius: 50%;
+  background: #4A3128;
+  box-shadow: 0 0 0 2.5px rgba(255, 255, 255, .85) inset;
+}
+.pm-face.is-shock .pm-eye.l{ left: 60px; }
+.pm-face.is-shock .pm-eye.r{ right: 60px; }
+.pm-face.is-shock .pm-snout{ transform: scale(.92); }
+.pm-face.is-happy .pm-eye{
+  width: 12px; height: 7px;
+  background: transparent;
+  border: none;
+  border-top: 2.5px solid #4A3128;
+  border-radius: 50% 50% 0 0;
+  transform: translateY(3px);
+}
+
+/* ---------- 飞行的硬币 ---------- */
+.pm-fly{
+  position: absolute; left: -40px; right: -40px; top: -150px; bottom: -8px;
+  pointer-events: none; z-index: 5;
+}
+.pm-fly-coin{
+  position: absolute; left: 50%; top: 163px;
+  width: 30px; height: 30px; margin-left: -15px;
+  will-change: transform, opacity;
+}
+.pm-fly-coin i{
+  display: block; width: 100%; height: 100%; border-radius: 50%;
+  background: radial-gradient(circle at 34% 26%, #FFF7D2 0%, #FBD75A 38%, #EFB01F 70%, #C98A08 100%);
+  box-shadow:
+    inset 0 -2px 4px rgba(140, 88, 0, .42),
+    inset 0 2px 3px rgba(255, 255, 255, .8),
+    0 4px 10px rgba(150, 100, 20, .35);
+  position: relative;
+}
+.pm-fly-coin i::after{
+  content: '¥'; position: absolute; inset: 0;
+  display: grid; place-items: center;
+  font-size: 12px; font-weight: 800; font-style: normal;
+  color: #A9700A; opacity: .55;
+}
+
+/* 命中光晕 */
+.pm-ping{
+  position: absolute; left: 50%; top: 19px;
+  width: 46px; height: 12px; margin-left: -23px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255, 236, 176, .95), rgba(255, 200, 90, 0) 72%);
+  pointer-events: none; z-index: 6;
+  animation: pmPing .52s ease-out both;
+}
+@keyframes pmPing{
+  0%{ opacity: 0; transform: scale(.5); }
+  35%{ opacity: 1; transform: scale(1.5); }
+  100%{ opacity: 0; transform: scale(2.4); }
+}
+
+/* ---------- 文案区 ---------- */
+.pm-amt{
+  margin-top: 2px;
+  font-size: 38px; font-weight: 800; line-height: 1.15;
+  letter-spacing: -1.2px;
+  font-variant-numeric: tabular-nums;
+}
+.pm-panel[data-mode="in"] .pm-amt{
+  background: linear-gradient(96deg, #E2543A 0%, #F2A24F 100%);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+}
+.pm-panel[data-mode="out"] .pm-amt{ color: #C2410C; }
+
+.pm-line{
+  min-height: 21px;
+  margin-top: 1px;
+  font-size: 13.5px;
+  color: #8A6A56;
+  letter-spacing: .1px;
+}
+.pm-panel[data-mode="out"] .pm-line{ color: #9A7460; }
+
+.pm-prog{ margin-top: 13px; text-align: left; }
+.pm-prog-txt{
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 11.5px; color: #A0806C;
+  margin-bottom: 6px;
+  font-variant-numeric: tabular-nums;
+}
+.pm-prog-txt b{ color: #7A5A46; font-weight: 700; }
+.pm-bar{
+  height: 8px; border-radius: 999px;
+  background: #F3E4D7;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(180, 130, 95, .16);
+}
+.pm-bar i{
+  display: block; height: 100%; width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #F5B25C, #E2543A);
+  transition: width .72s cubic-bezier(.2, .85, .3, 1);
+}
+.pm-panel[data-mode="out"] .pm-bar i{ background: linear-gradient(90deg, #D9B49C, #A9806A); }
+
+.pm-hint{
+  margin-top: 11px;
+  font-size: 11.5px;
+  color: #BE9E88;
+  letter-spacing: .2px;
+}
+
+/* ---------- 响应式 ---------- */
+@media (max-width: 420px){
+  .pm-panel{ padding: 18px 17px 12px; border-radius: 24px; }
+  .pm-stage{ height: 250px; }
+  .pm-amt{ font-size: 34px; }
+}
+@media (max-height: 640px){
+  .pm-stage{ height: 200px; transform: scale(.84); }
+  .pm-amt{ font-size: 30px; }
+  .pm-hint{ display: none; }
+}
+
+/* 尊重系统「减少动态效果」 */
+@media (prefers-reduced-motion: reduce){
+  .pm-mask, .pm-panel.is-in, .pm-jar.gulp, .pm-jar.shock, .pm-jar.deflate,
+  .pm-coin.drop, .pm-coin.eject, .pm-ping, .pm-shadow{ animation: none !important; }
+  .pm-coin, .pm-bar i{ transition-duration: .01s !important; }
+}

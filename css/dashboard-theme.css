@@ -1,0 +1,332 @@
+/* =========================================================
+   财悟·AI财务助手 — 工作台主题（与落地页同一设计系统）
+   米白 / 深炭 / 薄荷绿。仅 dashboard.html 加载，
+   在 style.css 之后，覆盖共享令牌 + 少量硬编码组件色。
+   ========================================================= */
+
+/* ---------- 自托管字体 ---------- */
+@font-face {
+  font-family: 'Inter';
+  src: url('../fonts/inter.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter Tight';
+  src: url('../fonts/inter-tight.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- 设计令牌覆盖 ---------- */
+:root {
+  /* 品牌：薄荷绿 */
+  --primary: #23B883;
+  --primary-dark: #0C6A4B;
+  --primary-soft: #E4FBEF;
+
+  /* 强调：深炭（替代原蓝色 accent） */
+  --accent: #171613;
+  --accent-soft: #EAE4D4;
+
+  /* 语义色：收入深薄荷 / 支出珊瑚红 */
+  --income: #0C6A4B;
+  --income-soft: #E4FBEF;
+  --expense: #E5484D;
+  --expense-soft: #FBEAE9;
+  --warning: #D97706;
+
+  /* 中性色：米白体系 */
+  --bg: #F2EEE3;
+  --surface: #FAF7F0;
+  --surface-2: #ECE6D6;
+  --text: #171613;
+  --text-2: #57544A;
+  --muted: #8C8778;
+  --border: #E3DCC9;
+  --border-strong: #D3CAB1;
+
+  /* 排版 */
+  --font: 'Inter', system-ui, -apple-system, 'PingFang SC', 'Microsoft YaHei',
+    'Hiragino Sans GB', Roboto, 'Segoe UI', sans-serif;
+  --font-display: 'Inter Tight', 'Inter', system-ui, 'PingFang SC',
+    'Microsoft YaHei', sans-serif;
+
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow-sm: 0 1px 2px rgba(23, 22, 19, 0.05);
+  --shadow: 0 8px 24px rgba(23, 22, 19, 0.08);
+  --shadow-lg: 0 18px 48px rgba(23, 22, 19, 0.16);
+  --maxw: 1240px;
+}
+
+html, body {
+  font-family: var(--font);
+}
+
+/* ---------- 顶部导航（白底暖色，与登录页统一主题） ----------
+   - 整条栏改为登录页同款「白 → 暖米」渐变 + 淡粉/淡金光晕
+   - 所有子元素改为深色，保证白底上清晰可读
+   - 去掉原先「单个标签金色背景」的做法：激活项用低饱和薄荷细描边区分 */
+.topnav {
+  background:
+    radial-gradient(720px 240px at 6% -60%, rgba(255, 222, 232, .55), transparent 60%),
+    radial-gradient(640px 220px at 98% 160%, rgba(255, 240, 210, .55), transparent 58%),
+    linear-gradient(160deg, #ffffff 0%, #fffaf6 52%, #fff3ec 100%);
+  color: #2b3a33;
+  box-shadow: 0 6px 20px rgba(190, 150, 120, .14);
+  border-bottom: 1px solid rgba(220, 180, 160, .28);
+}
+.topnav .brand { color: #2b3a33; }
+.topnav .s-logo {
+  background: linear-gradient(135deg, #16c08a, #ff6b81);
+  color: #fff;
+}
+.topnav .nav-item { color: #2b3a33; }
+.topnav .nav-item:hover { background: rgba(20, 120, 90, .10); color: #0c3326; }
+.topnav .nav-item.active {
+  background: rgba(20, 184, 131, .14);
+  color: #0c6a4b;
+  font-weight: 700;
+  box-shadow: none;
+  border: 1px solid rgba(20, 184, 131, .35);
+}
+.topnav .nav-item.active:hover {
+  background: rgba(20, 184, 131, .20);
+  color: #0c6a4b;
+}
+.topnav .badge-accent {
+  background: rgba(20, 184, 131, .14);
+  color: #0c6a4b;
+  border-color: rgba(20, 184, 131, .30);
+}
+.topnav .btn-ghost { color: #2b3a33; border-color: rgba(43, 58, 51, .30); }
+.topnav .btn-ghost:hover { background: rgba(43, 58, 51, .08); }
+.topnav .user-box .nm { color: #2b3a33; }
+.topnav .user-box .em { color: rgba(43, 58, 51, .62); }
+.topnav .avatar {
+  background: linear-gradient(135deg, #23B883, #0C6A4B);
+  color: #fff;
+}
+.topnav .logout-btn { background: rgba(43, 58, 51, .06); color: #2b3a33; }
+.topnav .logout-btn:hover { background: rgba(43, 58, 51, .12); }
+.tn-sep { background: rgba(43, 58, 51, .18); }
+.tn-section-title { color: #2b3a33; }
+
+/* ---------- 页面主体：与登录页一致的白底暖色光晕（极淡，卡片不透明，可读性不受影响） ---------- */
+body {
+  background:
+    radial-gradient(900px 700px at 12% -6%,  rgba(255, 222, 232, .42), transparent 55%),
+    radial-gradient(820px 680px at 100% 100%, rgba(255, 240, 210, .45), transparent 55%),
+    radial-gradient(620px 560px at 88% 3%,   rgba(212, 236, 255, .32), transparent 52%),
+    linear-gradient(165deg, #ffffff 0%, #fffaf6 50%, #fff3ec 100%);
+}
+
+/* ---------- 侧边栏（深炭 + 薄荷激活态） ---------- */
+.sidebar {
+  background: #14130F;
+}
+.sidebar .brand {
+  color: #F7F3E9;
+  font-weight: 700;
+}
+.sidebar .s-logo {
+  background: linear-gradient(135deg, #A9F5D0, #5FE3AC 52%, #1FAE7C);
+  color: #0B2A1F;
+  box-shadow: 0 0 0 1px rgba(35, 184, 131, 0.35), 0 2px 12px rgba(35, 184, 131, 0.25);
+}
+.nav-item {
+  color: #B5B0A4;
+  border-radius: 12px;
+}
+.nav-item:hover {
+  background: rgba(247, 243, 233, 0.06);
+  color: #F7F3E9;
+}
+.nav-item.active {
+  background: linear-gradient(135deg, #A9F5D0, #5FE3AC 52%, #1FAE7C);
+  color: #0B2A1F;
+  font-weight: 600;
+  box-shadow: 0 0 0 1px rgba(35, 184, 131, 0.4), 0 4px 18px rgba(35, 184, 131, 0.22);
+}
+.sidebar .user-box {
+  border-top-color: rgba(247, 243, 233, 0.1);
+}
+.sidebar .avatar {
+  background: linear-gradient(135deg, #23B883, #0C6A4B);
+}
+.sidebar .user-box .nm {
+  color: #F7F3E9;
+}
+.sidebar .user-box .em {
+  color: #9A958A;
+}
+
+/* ---------- 顶栏（米白玻璃） ---------- */
+.topbar {
+  background: rgba(250, 247, 240, 0.85);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border-bottom-color: var(--border);
+}
+.topbar h2 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.page-head h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+.stat .val {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variant-numeric: proportional-nums;
+}
+.balance {
+  font-family: var(--font-display);
+  font-weight: 500;
+}
+
+/* ---------- AI 卡片（炭色渐变） ---------- */
+.ai-card {
+  background: linear-gradient(160deg, #201F1B, #14130F);
+}
+.ai-card .ai-insight b {
+  color: #7FE9BC;
+}
+.ai-card .ai-chat button {
+  background: linear-gradient(135deg, #A9F5D0, #5FE3AC 52%, #1FAE7C);
+  color: #0B2A1F;
+  font-weight: 600;
+}
+.ai-card .ai-chat input {
+  background: rgba(247, 243, 233, 0.08);
+  border-color: rgba(247, 243, 233, 0.18);
+}
+
+/* ---------- AI 聊天：用户气泡用炭色 ---------- */
+.msg.user .bubble {
+  background: linear-gradient(135deg, #201F1B, #14130F);
+}
+
+/* ---------- AI 预测块（薄荷/炭渐变） ---------- */
+.ai-pred {
+  background: linear-gradient(135deg, rgba(35, 184, 131, 0.1), rgba(23, 22, 19, 0.05));
+  border-color: rgba(35, 184, 131, 0.35);
+}
+
+/* ---------- 语音记账按钮阴影 ---------- */
+.mic-btn {
+  box-shadow: 0 10px 30px rgba(35, 184, 131, 0.35);
+}
+
+/* ---------- 主按钮更落地页化 ---------- */
+.btn-primary {
+  background: linear-gradient(135deg, #A9F5D0, #5FE3AC 52%, #1FAE7C);
+  color: #0B2A1F;
+  box-shadow: 0 4px 14px rgba(35, 184, 131, 0.3);
+}
+.btn-primary:hover {
+  box-shadow: 0 8px 22px rgba(35, 184, 131, 0.4);
+}
+.subtab.active {
+  background: linear-gradient(135deg, #A9F5D0, #5FE3AC 52%, #1FAE7C);
+  border-color: transparent;
+  color: #0B2A1F;
+}
+.health-meta .grade {
+  background: linear-gradient(135deg, #A9F5D0, #5FE3AC 52%, #1FAE7C);
+  color: #0B2A1F;
+}
+
+/* ---------- 滚动条（WebKit，米白体系） ---------- */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+
+/* ---------- 移动端（≤980px）：侧边栏改为顶部横向导航条 ---------- */
+@media (max-width: 980px) {
+  /* horizontal-nav-strip: start */
+  .app-menu-btn {
+    display: none !important;
+  }
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 56px;
+    transform: none !important;
+    transition: none;
+    z-index: 40;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    border-right: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), inset -16px 0 12px -12px rgba(20, 19, 15, 0.85);
+    scrollbar-width: none;
+  }
+  .sidebar::-webkit-scrollbar {
+    display: none;
+  }
+  .sidebar .brand,
+  .sidebar .spacer,
+  .sidebar .user-box {
+    display: none;
+  }
+  .sidebar .nav-item {
+    flex: 0 0 auto;
+    width: auto;
+    min-height: 0;
+    white-space: nowrap;
+    padding: 8px 12px;
+    font-size: 13.5px;
+    border-radius: 999px;
+  }
+  .sidebar .nav-item:not(#logoutBtn) .ico {
+    display: none;
+  }
+  .sidebar #logoutBtn {
+    margin-top: 0 !important;
+    padding: 8px 10px;
+    border-radius: 999px;
+    flex: 0 0 auto;
+  }
+  .sidebar #logoutBtn .ico {
+    display: block;
+    width: auto;
+    font-size: 15px;
+  }
+  .sidebar #logoutBtn .logout-label {
+    display: none;
+  }
+  .main {
+    padding-top: 56px;
+  }
+  .topbar {
+    top: 56px;
+  }
+  /* horizontal-nav-strip: end */
+}
