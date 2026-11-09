@@ -242,9 +242,11 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   padding: 12px;
   font-size: 14px;
   line-height: 1;
+  white-space: nowrap;
   color: var(--on-dark-muted);
   transition: color 0.25s ease;
 }
+.nav-link .nav-ico { flex-shrink: 0; }
 .site-header.is-scrolled .nav-link { color: var(--text-2); }
 .nav-link:hover { color: var(--on-dark); }
 .site-header.is-scrolled .nav-link:hover { color: var(--text-1); }
@@ -260,6 +262,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   color: var(--cta-ink);
   font-size: 14px;
   font-weight: 500;
+  white-space: nowrap;
   box-shadow: 0 0 0 1px rgba(35, 184, 131, 0.45), 0 0 18px rgba(63, 217, 154, 0.25);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
