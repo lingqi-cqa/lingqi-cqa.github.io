@@ -1446,10 +1446,28 @@ body {
 }
 .hero-title .ht-line { display: block; }
 
-/* 红色主标题（封面连环反问句） */
+/* 红色主标题（封面首句）+ 高亮下划线 */
 .hero-title .ht-red {
+  position: relative;
+  isolation: isolate;
+  display: inline-block;
   color: #D8482F;
   font-weight: 600;
+  letter-spacing: .01em;
+  padding: 0 .04em;
+}
+.hero-title .ht-red::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: -1.5%;
+  right: -2.5%;
+  bottom: .04em;
+  height: .095em;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #E2543A 0%, #F2A24F 70%, #F2A24F 100%);
+  transform: rotate(-1.1deg);
+  opacity: .9;
 }
 
 /* 第一行：惊天内幕！——珊瑚红 + 荧光笔底纹（微微旋转，像手划的） */
