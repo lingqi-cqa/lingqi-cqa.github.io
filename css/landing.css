@@ -1446,6 +1446,12 @@ body {
 }
 .hero-title .ht-line { display: block; }
 
+/* 红色主标题（封面连环反问句） */
+.hero-title .ht-red {
+  color: #D8482F;
+  font-weight: 600;
+}
+
 /* 第一行：惊天内幕！——珊瑚红 + 荧光笔底纹（微微旋转，像手划的） */
 .hero-title .ht-l1 {
   position: relative;
