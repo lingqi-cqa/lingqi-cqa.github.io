@@ -31,7 +31,16 @@
     return { email, name, offline: true };
   }
 
+  // 预置通用演示账号（写死在前端）：任何浏览器/设备打开链接，输入此邮箱 + 任意密码(≥6位)即可登录。
+  // 用途：比赛提交时评委无需注册即可用固定账号体验完整功能（纯演示，非真实安全）。
+  const PRESET_DEMO_EMAIL = '2253332785@qq.com';
+
   function localLogin(email, password) {
+    // 预置通用账号：无论本机是否注册过，输入此邮箱即直接登录（密码任意，纯演示友好）
+    if (email === PRESET_DEMO_EMAIL) {
+      setSession({ email, name: '演示用户', token: null, offline: true });
+      return { email, name: '演示用户', offline: true };
+    }
     const users = JSON.parse(localStorage.getItem('cw_users') || '{}');
     const u = users[email];
     if (!u || u.password !== password) throw new Error('邮箱或密码不正确');
