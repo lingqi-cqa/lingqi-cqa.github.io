@@ -284,7 +284,9 @@
           connHint.style.color = '#e5484d';
         } else {
           // 纯静态托管版（如 GitHub Pages）：免后端，引导游客体验 / 本地注册
-          connHint.innerHTML = 'ℹ️ 当前为<b>纯静态演示版</b>：无需后端即可使用。可点下方<b>游客免登录体验</b>，或注册一个仅存本机浏览器的本地账号。';
+          connHint.innerHTML = 'ℹ️ 当前为<b>纯静态演示版</b>：无需后端即可使用。'
+            + '也可直接使用<b>通用演示账号</b>登录 — 邮箱 <b>2253332785@qq.com</b>，密码任意（≥6 位）。'
+            + '或点下方<b>游客免登录体验</b>。';
           connHint.style.color = '#0f9d76';
           const gb = document.getElementById('guestBtn');
           if (gb) gb.style.display = 'block';
